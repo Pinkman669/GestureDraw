@@ -1,0 +1,21 @@
+.demo-container {
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.demo {
+    margin: 10px;
+    padding: 10px;
+}
+
+.select-mode {
+    display: flex;
+    flex-direction: column;
+}
+
+#btn {
+    margin: 10px;
+    padding: 10px;
+}
