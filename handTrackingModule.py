@@ -51,8 +51,8 @@ def main():
     previous_time = 0
     count_time = 0
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 800)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
 
     detector = handDetector()
 

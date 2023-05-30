@@ -12,14 +12,16 @@
 
 <body>
     <div>
-        <video id="webcam" autoplay playsinline style="visibility: hidden;"></video>
-        <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+        <video id="webcam" autoplay playsinline></video>
+        <canvas class="output_canvas" id="output_canvas" style="display: none;"></canvas>
+        <canvas id="hand-detection" style="display: none;"></canvas>
+        <img src="" alt="" id="hand-img">
     </div>
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
-    <script src="js/index.js" type="module"></script>
+    <script src="./js/index.js" type="module"></script>
 </body>
 
 </html>

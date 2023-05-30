@@ -33,18 +33,22 @@ def main():
             cv2.line(img, (thumb_x, thumb_y), (index_x, index_y), (255,0,255), 1)
 
             fingers_distance = math.hypot(index_x - thumb_x, index_y - thumb_y)
+            print(lms_list)
             if (fingers_distance < 50):
                 cv2.circle(img, (centre_x, centre_y), 7, (255,0,0), cv2.FILLED)
 
         cv2.putText(img, f'FPS: {int(fps)}', (30, 30), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255), 3)
         cv2.imshow("img", img)
 
-        print(type(img))
-
         if cv2.waitKey(1) == ord('q'):
             cap.release()
             cv2.destroyAllWindows()
             break
+
+def detectHands(img):
+    detector = htm.handDetector(detection_confidence=0.7)
+    img = detector.findHands(img)
+    return img
 
 if __name__ == "__main__":
     main()
