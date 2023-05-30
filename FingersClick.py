@@ -3,6 +3,7 @@ import time
 import numpy as np
 import handTrackingModule as htm
 import math
+from memory_profiler import profile
 
 def main():
     # camera width and height
@@ -45,9 +46,20 @@ def main():
             cv2.destroyAllWindows()
             break
 
-def detectHands(img):
-    detector = htm.handDetector(detection_confidence=0.7)
+def detectHands(detector, img):
     img = detector.findHands(img)
+    lms_list = detector.findPosition(img, draw=False)
+    if len(lms_list):
+        thumb_x, thumb_y = lms_list[4][1], lms_list[4][2]
+        index_x, index_y = lms_list[8][1], lms_list[8][2]
+        centre_x, centre_y = (thumb_x + index_x)//2, (thumb_y + index_y)//2
+
+        cv2.circle(img, (centre_x, centre_y), 7, (255,0,255), cv2.FILLED)
+        cv2.line(img, (thumb_x, thumb_y), (index_x, index_y), (255,0,255), 1)
+
+        fingers_distance = math.hypot(index_x - thumb_x, index_y - thumb_y)
+        if (fingers_distance < 50):
+            cv2.circle(img, (centre_x, centre_y), 7, (255,0,0), cv2.FILLED)
     return img
 
 if __name__ == "__main__":

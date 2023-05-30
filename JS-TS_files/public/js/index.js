@@ -57,22 +57,20 @@ async function enableCam() {
       // const newFrame = await createImageBitmap(imageData)
       // document.querySelector('#hand-detection').setAttribute('src', `data:image/jpeg;base64,${result.handDetection}`)
       // canvasShowCtx.drawImage(newFrame, 0, 0, video.videoWidth, video.videoHeight)
-      // setInterval(async () => {
-        // }, 1000)
-        for (let i = 0; i < 15; i++){
-          canvasCtx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
-          const data = canvasElement.toDataURL('image/jpeg', 0.5)
-          console.log("sent")
-          const res = await fetch('/', {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ frame: data }),
-          })
-          const result = await res.json()
-          document.querySelector('#hand-img').setAttribute('src', `data:image/jpeg;base64,${result.handDetection}`)
-      }
+      setInterval(async () => {
+        canvasCtx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
+        const data = canvasElement.toDataURL('image/jpeg', 0.5)
+        console.log("sent")
+        const res = await fetch('/', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ frame: data }),
+        })
+        const result = await res.json()
+        document.querySelector('#hand-img').setAttribute('src', `data:image/jpeg;base64,${result.handDetection}`)
+      }, 80)
     });
   });
 }

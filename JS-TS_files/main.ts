@@ -22,7 +22,6 @@ app.post('/', async (req: Request, res: Response) => {
             },
             body: JSON.stringify({ frame: frame }),
         })
-        console.log("sent to sanic")
         const result = await resSanic.json()
         res.json({ handDetection: result.frame })
     } catch (e) {
