@@ -1,9 +1,7 @@
 import cv2
 import time
-import numpy as np
 import handTrackingModule as htm
 import math
-from memory_profiler import profile
 
 def main():
     # camera width and height
@@ -15,7 +13,7 @@ def main():
     cap.set(4, height_cam)
     c_time = 0
     p_time = 0
-    detector = htm.handDetector(detection_confidence=0.7)
+    detector = htm.handDetector(detection_confidence=0.8, track_confidence=0.8)
 
     while True:
         c_time = time.time()
@@ -24,7 +22,7 @@ def main():
 
         success, img = cap.read()
         img = detector.findHands(img)
-        lms_list = detector.findPosition(img, draw=False)
+        lms_list, retval = detector.findPosition(img)
         if len(lms_list):
             thumb_x, thumb_y = lms_list[4][1], lms_list[4][2]
             index_x, index_y = lms_list[8][1], lms_list[8][2]
@@ -34,7 +32,6 @@ def main():
             cv2.line(img, (thumb_x, thumb_y), (index_x, index_y), (255,0,255), 1)
 
             fingers_distance = math.hypot(index_x - thumb_x, index_y - thumb_y)
-            print(lms_list)
             if (fingers_distance < 50):
                 cv2.circle(img, (centre_x, centre_y), 7, (255,0,0), cv2.FILLED)
 
@@ -48,7 +45,7 @@ def main():
 
 def detectHands(detector, img):
     img = detector.findHands(img)
-    lms_list = detector.findPosition(img, draw=False)
+    lms_list, van_lm_list = detector.findPosition(img)
     if len(lms_list):
         thumb_x, thumb_y = lms_list[4][1], lms_list[4][2]
         index_x, index_y = lms_list[8][1], lms_list[8][2]
@@ -60,7 +57,7 @@ def detectHands(detector, img):
         fingers_distance = math.hypot(index_x - thumb_x, index_y - thumb_y)
         if (fingers_distance < 50):
             cv2.circle(img, (centre_x, centre_y), 7, (255,0,0), cv2.FILLED)
-    return img
+    return van_lm_list
 
 if __name__ == "__main__":
     main()

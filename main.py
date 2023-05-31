@@ -10,7 +10,7 @@ import handTrackingModule as htm
 app = Sanic("project")
 
 # Hand detecetor
-detector = htm.handDetector(detection_confidence=0.7)
+detector = htm.handDetector(detection_confidence=0.5)
 
 @app.post('/')
 def test(request):
@@ -20,10 +20,10 @@ def test(request):
         decoded_frame = base64.b64decode(encoded_frame)
         nparr = np.frombuffer(decoded_frame, np.uint8)
         img = cv2.imdecode(nparr, 1)
-        img = FingersClick.detectHands(detector, img)
-        img = cv2.imencode('.jpg', img)[1]
-        encoded_img = base64.b64encode(img).decode()
-        return json({"frame": encoded_img})
+        lms_list = FingersClick.detectHands(detector, img)
+        # img = cv2.imencode('.jpg', img)[1]
+        # encoded_img = base64.b64encode(img).decode()
+        return json({"frame": "encoded_img", "landmarks": lms_list})
     except:
         print('no')
 
