@@ -1,4 +1,5 @@
 
 .env
-
+mp_python
 node_modules
+newHandTrackingMod.py
