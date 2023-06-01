@@ -6,6 +6,7 @@ export async function up(knex: Knex){
         table.increments()
         table.string("username")
         table.integer("score")
+        table.timestamps(false, true);
     })
 }
 
