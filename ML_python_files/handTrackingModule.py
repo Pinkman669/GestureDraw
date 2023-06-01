@@ -58,8 +58,4 @@ class handDetector():
                         "index_XY": [index_x, index_y],
                         "thumb_XY": [thumb_x, thumb_y]
                         })
-                    # check_result["centre_XY"] = [centre_x, centre_y]
-                    # check_result["index_XY"] = [index_x, index_y]
-                    # check_result["thumb_XY"] = [thumb_x, thumb_y]
-            print(len(check_result['hands_lms_list']))
         return check_result
