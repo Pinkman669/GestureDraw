@@ -1,18 +1,18 @@
 import express from "express";
 import { Request, Response } from 'express'
+// import {rankingRoutes} from "./rankingRoutes";
+// import { logger } from "./logger";
+// import { homeRoutes} from "./homeRoutes";
 
 const app = express()
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: '2000kb' }));
 
 app.use(express.static('public'))
+// app.use("/",homeRoutes);
+// app.use('/ranking',rankingRoutes);
 
-app.get('/', (req: Request, res: Response) => {
-    console.log('yes')
-    res.json({ success: true })
-})
-
-app.post('/', async (req: Request, res: Response) => {
+app.post('/frame', async (req: Request, res: Response) => {
     try {
         const frame = req.body.frame
         const resSanic = await fetch('http://127.0.0.1:8000/', {

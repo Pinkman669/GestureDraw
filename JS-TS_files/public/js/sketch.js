@@ -27,12 +27,6 @@ function drawOval(x1, y1, w, h) {
     ellipse(x1, y1, w, h)
 }
 
-function drawingIndicator(word, x1, y1){
-    stroke(220)
-    text(word, x1, y1)
-    fill(0, 102, 153);
-}
-
 async function enableCam() {
     // getUsermedia parameters.
     const constraints = {
@@ -60,7 +54,7 @@ async function enableCam() {
                 canvasCtx.drawImage(video, 0, 0)
                 const data = canvasElement.toDataURL('image/jpeg')
                 console.log("sent")
-                const res = await fetch('/', {
+                const res = await fetch('/frame', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -79,8 +73,6 @@ async function enableCam() {
                         color: "#00FF00",
                         lineWidth: 2
                     });
-                    console.log(result.landmarksInPixel[0][1])
-                    drawingIndicator("Single hand", result.landmarksInPixel[0][0][1], result.landmarksInPixel[0][0][2])
                     // If index and thumb are close
                     if (result.checkDraw.check) {
                         const centreX = result.checkDraw.hands_lms_list[0].centre_XY[0]
