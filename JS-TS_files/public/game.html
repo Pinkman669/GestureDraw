@@ -5,43 +5,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Training mode</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/game.css">
 </head>
 
 <body>
-    <div>
-        <video id="webcam" autoplay playsinline style="visibility: hidden;"></video>
-        <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
-    </div>
-
-    <div class="demo-container">
-        <div class="demo">
-            <img src="" alt="Clear gesture">
-            <button type="button" class="btn btn-dark">Clear</button>
+    <div class="container-fluid game-canvas">
+        <div id="canvas-container">
+            <video class="output-data drawing-utils" id="webcam" muted autoplay playsinline></video>
+            <canvas class="output-data drawing-utils" id="output_canvas"></canvas>
+            <canvas class="drawing-utils" id="landmarks"></canvas>
+            <canvas class="drawing-utils" id="drawing-canvas"></canvas>
         </div>
-        <div class="demo">
-            <img src="" alt="Undo gesture">
-            <button type="button" class="btn btn-dark">Undo</button>
-        </div>
-
-        <div class="select-mode">
-            <h1>Game Mode:</h1>
-            <button type="button" class="btn btn-dark" id="btn">free draw</button>
-            <button type="button" class="btn btn-dark" id="btn">training</button>
-            <button type="button" class="btn btn-dark" id="btn">countdown</button>
+        <div id="indictor-container">
+            <div id="input-indictor"></div>
         </div>
     </div>
+    <div class="container-fluid game-details">
+        <div class="demo-container">
+            <div class="gesture-container">
+                <div class="gesture-btn-container">
+                    <img src="./image/two_fingers_up_gesture.png" alt="Clear gesture">
+                    <button type="button" id="clear-btn" class="btn btn-dark gesture-btn">Clear</button>
+                </div>
+                <div class="gesture-btn-container">
+                    <img src="./image/two_fingers_up_gesture.png" alt="Undo gesture">
+                    <button type="button" id="undo-btn" class="btn btn-dark gesture-btn">Undo</button>
+                </div>
+            </div>
+    
+            <div class="select-mode">
+                <h1>Game Mode:</h1>
+                <button type="button" class="btn btn-dark" id="btn">free draw</button>
+                <button type="button" class="btn btn-dark" id="btn">training</button>
+                <button type="button" class="btn btn-dark" id="btn">countdown</button>
+            </div>
+        </div>
+    </div>
+    
 
 
     </div>
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"
+        integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="js/game.js" type="module"></script>
+    <script src="js/sketch.js"></script>
 </body>
 
 </html>
