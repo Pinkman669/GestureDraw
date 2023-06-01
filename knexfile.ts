@@ -1,3 +1,8 @@
+import type {Knex} from "knex";
+import dotenv from "dotenv"
+dotenv.config();
+
+
 module.exports = {
     development: {
       client: "postgresql",
