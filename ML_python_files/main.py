@@ -21,7 +21,7 @@ def test(request):
         img = cv2.imdecode(nparr, 1)
         hands_list, lms_list_in_pixel = detector.findPosition(img)
         check_result = detector.enable_draw()
-        return json({"lanmarks_in_pixel": lms_list_in_pixel, "landmarks": hands_list, "enable_draw": check_result})
+        return json({"landmarks_in_pixel": lms_list_in_pixel, "landmarks": hands_list, "enable_draw": check_result})
     except:
         print('no')
 

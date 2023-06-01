@@ -11,6 +11,7 @@ function setup() {
     const canvas = createCanvas(800, 600)
     canvas.parent(canvasContainer)
     background(220);
+    fill(220)
 }
 
 function drawLine(x1, y1, x2, y2) {
@@ -24,6 +25,12 @@ function drawOval(x1, y1, w, h) {
     stroke('black')
     strokeWeight(2)
     ellipse(x1, y1, w, h)
+}
+
+function drawingIndicator(word, x1, y1){
+    stroke(220)
+    text(word, x1, y1)
+    fill(0, 102, 153);
 }
 
 async function enableCam() {
@@ -72,6 +79,8 @@ async function enableCam() {
                         color: "#00FF00",
                         lineWidth: 2
                     });
+                    console.log(result.landmarksInPixel[0][1])
+                    drawingIndicator("Single hand", result.landmarksInPixel[0][0][1], result.landmarksInPixel[0][0][2])
                     // If index and thumb are close
                     if (result.checkDraw.check) {
                         const centreX = result.checkDraw.hands_lms_list[0].centre_XY[0]

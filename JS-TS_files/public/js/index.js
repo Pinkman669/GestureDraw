@@ -1,4 +1,4 @@
-import * as drawFn from "./sketch.js"
+// import * as drawFn from "./sketch.js"
 
 const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia
 
