@@ -1,28 +1,29 @@
 const canvasContainer = document.querySelector('#canvas-container')
 const video = document.getElementById("webcam")
 const canvasElement = document.getElementById("output_canvas")
-const canvasShow = document.querySelector('#hand-detection')
 const canvasCtx = canvasElement.getContext("2d");
-const canvasShowCtx = canvasShow.getContext('2d')
 const canvasHands = document.querySelector('#landmarks')
-const drawingCanvas= document.querySelector('#drawing-canvas')
+const drawingCanvas = document.querySelector('#drawing-canvas')
 const canvasHandsCtx = canvasHands.getContext('2d')
 const drawingCanvasCtx = drawingCanvas.getContext('2d')
 
 function setup() {
     const canvas = createCanvas(800, 600)
     canvas.parent(canvasContainer)
-    noLoop()
-}
-
-function draw() {
     background(220);
 }
 
-function drawPoint(x, y) {
-    point(x,y)
-    strokeWeight(10)
+function drawLine(x1, y1, x2, y2) {
     stroke('purple')
+    strokeWeight(15)
+    line(x1, y1, x2, y2)
+}
+
+function drawOval(x1, y1, w, h) {
+    console.log(w, h)
+    stroke('black')
+    strokeWeight(2)
+    ellipse(x1, y1, w, h)
 }
 
 async function enableCam() {
@@ -40,13 +41,14 @@ async function enableCam() {
             console.log(video.videoHeight)
             canvasElement.width = video.videoWidth;
             canvasElement.height = video.videoHeight;
-            canvasShow.width = video.videoWidth;
-            canvasShow.height = video.videoHeight;
             canvasHands.width = video.videoWidth
             canvasHands.height = video.videoHeight
             drawingCanvas.width = video.videoWidth
             drawingCanvas.height = video.videoHeight
             // Take stream picture to server
+            let prevX, prevY
+            let centreX1, centreY1, centreX2, centreY2
+            let drawOvalMode = false
             setInterval(async () => {
                 canvasCtx.drawImage(video, 0, 0)
                 const data = canvasElement.toDataURL('image/jpeg')
@@ -61,36 +63,68 @@ async function enableCam() {
                 const result = await res.json()
 
                 // Draw hands shape in other canvas
-                canvasHandsCtx.save()
+                // canvasHandsCtx.save()
                 canvasHandsCtx.clearRect(0, 0, canvasHands.width, canvasHands.height);
-                if (result.landmarks) {
-                    const landmarks = []
-                    let thumbX, thumbY
-                    let indexX, indexY
-                    for (const marks of result.landmarks) {
-                        if (marks[0] == 4) {
-                            [thumbX, thumbY] = [marks[1], marks[2]]
-                        }
-                        if (marks[0] == 8) {
-                            [indexX, indexY] = [marks[1], marks[2]]
-                        }
-                        landmarks.push({ x: marks[1], y: marks[2] })
-                    }
-                    const centreX = (thumbX + indexX) / 2
-                    const centreY = (thumbY + indexY) / 2
-                    const fingersDistance = Math.hypot(thumbX * canvasHands.width - indexX * canvasHands.width, thumbY * canvasHands.height - indexY * canvasHands.height)
+                // Draw line mode (single hand)
+                if (result.landmarks.length === 1) {
                     // Draw hand shape
-                    drawConnectors(canvasHandsCtx, landmarks, HAND_CONNECTIONS, {
+                    drawConnectors(canvasHandsCtx, result.landmarks[0], HAND_CONNECTIONS, {
                         color: "#00FF00",
                         lineWidth: 2
                     });
                     // If index and thumb are close
-                    if (fingersDistance < 40) {
-                        drawLandmarks(canvasHandsCtx, [{ x: centreX, y: centreY }], { color: "#FF0000", lineWidth: 5 });
-                        drawPoint(centreX*video.videoWidth, centreY*video.videoHeight)
+                    if (result.checkDraw.check) {
+                        const centreX = result.checkDraw.hands_lms_list[0].centre_XY[0]
+                        const centreY = result.checkDraw.hands_lms_list[0].centre_XY[1]
+                        // Draw mode indicator
+                        drawLandmarks(canvasHandsCtx, [{ x: centreX / video.videoWidth, y: centreY / video.videoHeight }], { color: "#FF0000", lineWidth: 5 });
+                        if (!prevX && !prevY) {
+                            prevX = centreX
+                            prevY = centreY
+                        }
+                        // Painting
+                        drawLine(centreX, centreY, prevX, prevY)
+                        prevX = centreX
+                        prevY = centreY
+
+                    } else {
+                        prevX = 0
+                        prevY = 0
+                    }
+                    // Two hand mode (For drawing circle and square)
+                } else if (result.landmarks.length === 2) {
+                    for (const handLandmark of result.landmarks) {
+                        drawConnectors(canvasHandsCtx, handLandmark, HAND_CONNECTIONS, {
+                            color: "#0000FF",
+                            lineWidth: 2
+                        });
+                    }
+                    if (result.checkDraw.check && result.checkDraw.hands_lms_list.length > 1) {
+                        drawOvalMode = true
+                        centreX1 = result.checkDraw.hands_lms_list[0].centre_XY[0]
+                        centreY1 = result.checkDraw.hands_lms_list[0].centre_XY[1]
+                        centreX2 = result.checkDraw.hands_lms_list[1].centre_XY[0]
+                        centreY2 = result.checkDraw.hands_lms_list[1].centre_XY[1]
+                        drawLandmarks(canvasHandsCtx, [{ x: centreX1 / video.videoWidth, y: centreY1 / video.videoHeight }],
+                            { color: "#FF0000", lineWidth: 5 });
+                        drawLandmarks(canvasHandsCtx, [{ x: centreX2 / video.videoWidth, y: centreY2 / video.videoHeight }],
+                            { color: "#00FF00", lineWidth: 5 });
+                    } else{
+                        drawOvalMode = false
+                    }
+                    if (!drawOvalMode && centreX1 > 0 && centreX2 > 0){
+                        const w = Math.hypot(centreX1 - centreX2)
+                        const h = Math.hypot(centreY1 - centreY2)
+                        const x1 =  (centreX1 + centreX2) / 2
+                        const y1 = (centreY1 + centreY2) / 2
+                        centreX1 = 0
+                        centreY1 = 0
+                        centreX2 = 0
+                        centreY2 = 0
+                        drawOval(x1,y1,w, h)
                     }
                 }
-                canvasHandsCtx.restore()
+                // canvasHandsCtx.restore()
             }, 50)
         });
     });

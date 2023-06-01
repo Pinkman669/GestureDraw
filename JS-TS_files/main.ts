@@ -23,9 +23,10 @@ app.post('/', async (req: Request, res: Response) => {
             body: JSON.stringify({ frame: frame }),
         })
         const result = await resSanic.json()
-        res.json({ handDetection: result.frame, landmarks: result.landmarks })
+        res.json({ landmarksInPixel: result.landmarks_in_pixel, landmarks: result.landmarks , checkDraw: result.enable_draw})
     } catch (e) {
         console.log(e)
+        res.json({success: false})
     }
 })
 
