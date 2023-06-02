@@ -45,6 +45,18 @@ body{
     align-items: flex-end;
 }
 
+#undo-sign{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    font-size: 30px;
+    background-color: rgba(128, 128, 128, 0.852);
+}
+
 .gesture-container{
     display: flex;
 }

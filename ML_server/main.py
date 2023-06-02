@@ -8,7 +8,7 @@ import handTrackingModule as htm
 app = Sanic("project")
 
 # Hand detecetor
-detector = htm.handDetector()
+detector = htm.handDetector(detection_confidence=0.7)
 
 @app.post('/')
 def test(request):
@@ -20,7 +20,8 @@ def test(request):
         img = cv2.imdecode(nparr, 1)
         hands_list, lms_list_in_pixel = detector.findPosition(img)
         check_result = detector.enable_draw()
-        return json({"landmarks_in_pixel": lms_list_in_pixel, "landmarks": hands_list, "enable_draw": check_result})
+        fingers_up = detector.count_fingers_up()
+        return json({"landmarks_in_pixel": lms_list_in_pixel, "landmarks": hands_list, "enable_draw": check_result, "fingers_up": fingers_up})
     except:
         print('no')
 

@@ -34,7 +34,7 @@ app.post('/frame', async (req: Request, res: Response) => {
             body: JSON.stringify({ frame: frame }),
         })
         const result = await resSanic.json()
-        res.json({ landmarksInPixel: result.landmarks_in_pixel, landmarks: result.landmarks , checkDraw: result.enable_draw})
+        res.json({ landmarksInPixel: result.landmarks_in_pixel, landmarks: result.landmarks , checkDraw: result.enable_draw, fingersUp: result.fingers_up})
     } catch (e) {
         console.log(e)
         res.json({success: false})
