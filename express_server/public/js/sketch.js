@@ -7,11 +7,12 @@ const drawingCanvas = document.querySelector('#drawing-canvas')
 const canvasHandsCtx = canvasHands.getContext('2d')
 const drawingCanvasCtx = drawingCanvas.getContext('2d')
 const indicator = document.querySelector('#input-indictor')
+const undoSign = document.querySelector('#undo-sign')
 // Gesture btn
 const undoBtn = document.querySelector('#undo-btn')
 
 function setup() {
-    const canvas = createCanvas(800, 600)
+    const canvas = createCanvas(1280, 720)
     canvas.parent(canvasContainer)
     background(255);
     fill(255)
@@ -32,7 +33,7 @@ function clearLine(x1, y1, x2, y2) {
 function drawOval(x1, y1, w, h) {
     console.log(w, h)
     stroke('black')
-    strokeWeight(5)
+    strokeWeight(10)
     ellipse(x1, y1, w, h)
 }
 
@@ -45,8 +46,8 @@ async function enableCam() {
     // getUsermedia parameters.
     const constraints = {
         video: {
-            width: 800,
-            height: 600
+            width: 1280,
+            height: 720
         }
     };
     // Activate the webcam stream.
@@ -63,6 +64,7 @@ async function enableCam() {
             let prevX, prevY
             let centreX1, centreY1, centreX2, centreY2
             let drawOvalMode = false
+            let undoCounter = 0
             // Reverse img
             canvasCtx.setTransform(-1, 0, 0, 1, canvasElement.width, 0)
 
@@ -108,8 +110,7 @@ async function enableCam() {
                         prevX = centreX
                         prevY = centreY
                     } else if (result.fingersUp.length == 1) {
-                        console.log(result.checkDraw.hands_lms_list[0].index_XY[0])
-                        if (result.fingersUp.includes(8)) {
+                        // if (result.fingersUp.includes(8)) {
                             const indexX = result.landmarksInPixel[0][8][1]
                             const indexY = result.landmarksInPixel[0][8][2]
                             if (!prevX && !prevY) {
@@ -123,8 +124,23 @@ async function enableCam() {
                                 { color: "grey", lineWidth: 3 });
                             prevX = indexX
                             prevY = indexY
+                        // }
+                    // Undo gesture threshold = 3000ms
+                    } else if (result.fingersUp.length == 0){
+                        if (undoCounter === 1020){
+                            undoSign.textContent = "Undo in 2 Sec"
+                            undoSign.classList.remove('output-data')
+                        } else if (undoCounter ===2040){
+                            undoSign.textContent = "Undo in 1 Sec"
+                        } else if (undoCounter === 3000){
+                            undoBtn.click()
+                            undoSign.classList.add('output-data')
                         }
-                    } else {
+                        undoCounter += 60
+                    } 
+                    else {
+                        undoSign.classList.add('output-data')
+                        undoCounter = 0
                         prevX = 0
                         prevY = 0
                     }
@@ -169,7 +185,7 @@ async function enableCam() {
                     indicator.style.backgroundColor = "white"
                 }
                 // canvasHandsCtx.restore()
-            }, 50)
+            }, 55)
         });
     });
 }
