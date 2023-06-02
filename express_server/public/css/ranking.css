@@ -1,0 +1,27 @@
+body{
+    background-color: #DCDCDC;
+}
+.ranking-chart-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+}
+#ranking-chart{
+    text-align: center;
+    width: 50%;
+    margin-top:20px;
+    
+     
+}
+
+@media screen and (max-width: 500px){
+    #ranking-chart{
+        max-width: 1000px;
+    }
+}
+
+    
+
+
+
