@@ -3,7 +3,8 @@ import { Request, Response } from 'express'
 import Knex from "knex";
 import { RankingService } from "./services/rankingService";
 import { RankingController } from "./controllers/rankingController";
-import { rankingRoutes } from "./routers";
+import { landingRoutes, rankingRoutes } from "./routers";
+import { LandingController } from "./controllers/landingController";
 
 
 const knexConfigs = require("./knexfile");
@@ -13,6 +14,7 @@ const knex = Knex(knexConfig);
 
 export const rankingService = new RankingService(knex)
 export const rankingController = new RankingController(rankingService);
+export const landingController =new LandingController();
 
 
 const app = express()
@@ -21,6 +23,7 @@ app.use(express.json({ limit: '2000kb' }));
 
 app.use(express.static('public'))
 app.use('/ranking',rankingRoutes());
+app.use('/',landingRoutes());
 
 
 app.post('/frame', async (req: Request, res: Response) => {
