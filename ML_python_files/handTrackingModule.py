@@ -21,7 +21,7 @@ class handDetector():
 
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(self.mode, self.max_hands, self.model_complexity, self.detection_confidence, self.track_confidence)
-    
+        self.tip_ids = [8, 12, 16, 20]
     def findPosition(self, img):
         hands_list = []
         self.hands_list_in_pixel = []
@@ -51,11 +51,44 @@ class handDetector():
                 fingers_distance_in_pixel = math.hypot(index_x - thumb_x, index_y - thumb_y)
                 if fingers_distance_in_pixel < 50:
                     check_result["check"] = True
-                    centre_x = (index_x + thumb_x) / 2
-                    centre_y = (index_y + thumb_y) / 2
-                    check_result['hands_lms_list'].append({
-                        "centre_XY": [centre_x, centre_y],
-                        "index_XY": [index_x, index_y],
-                        "thumb_XY": [thumb_x, thumb_y]
-                        })
+                centre_x = (index_x + thumb_x) / 2
+                centre_y = (index_y + thumb_y) / 2
+                check_result['hands_lms_list'].append({
+                    "centre_XY": [centre_x, centre_y],
+                    "index_XY": [index_x, index_y],
+                    "thumb_XY": [thumb_x, thumb_y]
+                    })
         return check_result
+    def count_fingers_up(self):
+        fingers = []
+        if (len(self.hands_list_in_pixel)):
+            for tip_id in self.tip_ids:
+                if self.hands_list_in_pixel[0][tip_id][2] < self.hands_list_in_pixel[0][tip_id-2][2]:
+                    fingers.append(tip_id)
+        return fingers
+    
+# # For testing
+# def main():
+#     # camera width and height
+#     width_cam, height_cam = 640, 480
+
+#     # Configure camera settings
+#     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+#     cap.set(3, width_cam) # index refer to VideoCaptureProperties
+#     cap.set(4, height_cam)
+#     detector = handDetector()
+
+#     while True:
+
+#         success, img = cap.read()
+#         detector.findPosition(img)
+#         detector.count_fingers_down()
+#         cv2.imshow('img', img)
+
+#         if cv2.waitKey(1) == ord('q'):
+#             cap.release()
+#             cv2.destroyAllWindows()
+#             break
+
+# if __name__ == "__main__":
+#     main()
