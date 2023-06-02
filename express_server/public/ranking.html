@@ -12,7 +12,7 @@
   <body>
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Home</a>
+        <a class="navbar-brand" href="./index.html">Home</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -43,7 +43,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link active" aria-current="page" href="./ranking.html"
                 >Ranking Board</a
               >
             </li>
@@ -51,8 +51,9 @@
         </div>
       </div>
     </nav>
-    <div id="ranking-chart">
-    <table class="table center">
+    <div class="ranking-chart-container">
+      <div id="ranking-chart">
+       <table class="table center">
         <thead>
           <tr>
             <th scope="col">Rank</th>
@@ -60,72 +61,11 @@
             <th scope="col">Score</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-          <tr>
-            <th scope="row">3</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-          <tr>
-            <th scope="row">4</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-          <tr>
-            <th scope="row">5</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-          <tr>
-            <th scope="row">6</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-          <tr>
-            <th scope="row">7</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-          <tr>
-            <th scope="row">8</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-          <tr>
-            <th scope="row">9</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-          <tr>
-            <th scope="row">10</th>
-            <td class="username">user 1</td>
-            <td class="score">100</td>
-          </tr>
-
-        </tbody>
+       <tbody id="ranking-board">
+       </tbody>
       </table>
+      </div>
     </div>
-
-
     <script src="js/ranking.js"></script>
   </body>
 </html>

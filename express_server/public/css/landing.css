@@ -1,0 +1,75 @@
+body{
+    background-color: #DCDCDC;
+}
+
+.main{
+  display: grid;
+  grid-template-columns: auto ;
+  grid-gap: 50px;
+  padding: 10px;
+  height: 100%;
+  margin:50px;
+}
+
+
+#pre-game{
+    grid-column: 1 / span 2;
+    text-align: center;
+    height:400px;
+    padding: 100px 0;
+    outline: 7px solid #F0C14E;
+    background-image:url('');
+    border-radius: 25px;
+}
+
+h1{
+    font-size: 100px;
+}
+
+.game-introduction-container{
+     display: flex;
+}
+#introduction{
+    outline: 7px solid #4B88C6;
+    
+    border-radius: 25px;
+    padding:20px;
+    text-align: center;
+    height:400px;
+
+}
+#how-to-play{
+    outline: 7px solid #4B88C6;
+    border-radius: 25px;
+    padding:20px;
+    text-align: center;
+    height:400px;
+}
+
+.title{
+    font-size: 50px;
+    color: #000;
+}
+
+.content{
+    font-size: 20px;
+    color: #000;
+}
+input{
+   
+    border: 5px solid #000;
+    border-radius: 25px;
+    padding: 16px 32px;
+    margin: 4px 2px;
+   
+}
+#start-btn{
+    
+    border: 5px solid #000;
+    border-radius: 25px;
+    color: #000;
+    padding: 16px 32px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-weight: 700;
+}
