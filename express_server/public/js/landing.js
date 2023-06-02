@@ -8,12 +8,6 @@ document
 		// Get saved data from sessionStorage
 		let data = sessionStorage.getItem("username");
 
-		const res = await fetch('/', {
-			method: 'POST',
-			body: data
-		});
-		const result = await res.json();
-        
 		window.location = "./game.html"
 		
 	});
