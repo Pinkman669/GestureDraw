@@ -9,10 +9,10 @@ export const rankingRoutes = () =>{
         return route;
 };
 
-export const gameRoutes = () =>{
-        const route = express.Router();
-        route.post("/",gameController.getusername)
-}
+// export const gameRoutes = () =>{
+//         const route = express.Router();
+//         route.post("/",gameController.getusername)
+// }
 
 
 
