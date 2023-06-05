@@ -3,7 +3,8 @@ import { Request, Response } from 'express'
 import Knex from "knex";
 import { RankingService } from "./services/rankingService";
 import { RankingController } from "./controllers/rankingController";
-import { rankingRoutes } from "./routers";
+import {  rankingRoutes } from "./routers";
+
 
 
 const knexConfigs = require("./knexfile");
@@ -15,12 +16,14 @@ export const rankingService = new RankingService(knex)
 export const rankingController = new RankingController(rankingService);
 
 
+
 const app = express()
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: '2000kb' }));
 
 app.use(express.static('public'))
 app.use('/ranking',rankingRoutes());
+
 
 
 app.post('/frame', async (req: Request, res: Response) => {

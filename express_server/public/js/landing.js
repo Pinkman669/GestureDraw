@@ -1,18 +1,13 @@
 document
 	.querySelector('#start-btn')
-	.addEventListener('submit', async (event) => {
-		event.preventDefault();
+	.addEventListener('click', async (event) => {
+		const user = document.querySelector('#username').value
+		// Save data to sessionStorage
+		sessionStorage.setItem("username",user);
 
-		const form = event.target;
-        const username = new FormData(form);
+		// Get saved data from sessionStorage
+		let data = sessionStorage.getItem("username");
 
-
-		const res = await fetch('/game', {
-			method: 'POST',
-			body: username
-		});
-		const status = await res.json();
-        
-		form.reset();
+		window.location = "./game.html"
 		
 	});

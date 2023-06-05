@@ -1,5 +1,6 @@
 import express from "express";
-import { rankingController } from "./main";
+import {  rankingController } from "./main";
+
 
 
 
@@ -9,10 +10,6 @@ export const rankingRoutes = () =>{
         return route;
 };
 
-// export const gameRoutes = () =>{
-//         const route = express.Router();
-//         route.post("/",gameController.getusername)
-// }
 
 
 

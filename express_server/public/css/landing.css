@@ -15,7 +15,7 @@ body{
 #pre-game{
     grid-column: 1 / span 2;
     text-align: center;
-    height:400px;
+    min-height: fit-content;
     padding: 100px 0;
     outline: 7px solid #F0C14E;
     background-image:url('');
@@ -35,7 +35,7 @@ h1{
     border-radius: 25px;
     padding:20px;
     text-align: center;
-    height:400px;
+    max-height: 300px;
 
 }
 #how-to-play{
@@ -43,7 +43,7 @@ h1{
     border-radius: 25px;
     padding:20px;
     text-align: center;
-    height:400px;
+    min-height: fit-content;
 }
 
 .title{
