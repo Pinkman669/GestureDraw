@@ -8,16 +8,33 @@
     <title>Training mode</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/game.css">
+    <link rel="stylesheet" href="./css/training.css">
 </head>
 
 <body>
+    <div class="container-fluid quiz-select">
+        <div class="game-header">
+            <div>
+                <select class="form-select" id="challenge-selector" aria-label="Default select example">
+                    <option selected disabled>Select Challenge</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="controller-panel">
+                <button type="button" class="btn btn-success Start-btn">Start</button>
+                <button disabled type="button" class="btn btn-success submit-btn">Submit</button>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid game-canvas">
         <div id="canvas-container">
             <video class="output-data drawing-utils" id="webcam" muted autoplay playsinline></video>
-            <canvas class="output-data drawing-utils" id="output_canvas" ></canvas>
+            <canvas class="output-data drawing-utils" id="output_canvas"></canvas>
             <canvas class="drawing-utils" id="landmarks"></canvas>
             <canvas class="drawing-utils" id="drawing-canvas"></canvas>
+            <img id="challenge-photo" src="" alt="">
             <div id="undo-sign" class="output-data"></div>
         </div>
         <div id="indictor-container">
@@ -29,14 +46,14 @@
             <div class="gesture-container">
                 <div class="gesture-btn-container">
                     <img src="./image/two_fingers_up_gesture.png" alt="Clear gesture">
-                    <button type="button" id="clear-btn" class="btn btn-dark gesture-btn">Clear</button>
+                    <button disabled type="button" id="clear-btn" class="btn btn-dark gesture-btn">Clear</button>
                 </div>
                 <div class="gesture-btn-container">
                     <img src="./image/two_fingers_up_gesture.png" alt="Undo gesture">
                     <button type="button" id="undo-btn" class="btn btn-dark gesture-btn">Undo</button>
                 </div>
             </div>
-    
+
             <div class="select-mode">
                 <h1>Game Mode:</h1>
                 <button type="button" class="btn btn-dark" id="btn">free draw</button>
@@ -45,7 +62,7 @@
             </div>
         </div>
     </div>
-    
+
 
 
     </div>
@@ -58,7 +75,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"
         integrity="sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="js/game.js" type="module"></script>
+    <script src="js/training.js" type="module"></script>
     <script src="js/sketch.js"></script>
 </body>
 

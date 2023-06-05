@@ -4,7 +4,6 @@ body{
 
 #canvas-container{
     position: relative;
-    margin-top: 50px;
 }
 .output-data{
     visibility: hidden;
@@ -12,6 +11,25 @@ body{
 
 .drawing-utils{
     position:absolute;
+}
+
+.game-header{
+    display: flex;
+    justify-content: space-around;
+}
+
+#challenge-photo{
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 200px;
+    max-height: auto;
+    opacity: 0.5;
+}
+
+#challenge-selector{
+    background-color: #212529;
+    color: white;
 }
 
 .container-fluid.game-canvas{
@@ -23,6 +41,19 @@ body{
 
 .container-fluid.game-details{
     max-width: 1280px;
+}
+
+.container-fluid.quiz-select{
+    max-width: 1050px;
+}
+
+.controller-panel{
+    margin: 10px 0;
+}
+
+.form-select{
+    margin: 10px 0;
+    width: auto;
 }
 
 #input-indictor{

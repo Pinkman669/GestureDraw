@@ -1,18 +1,25 @@
+// Declare variables
 const canvasContainer = document.querySelector('#canvas-container')
 const video = document.getElementById("webcam")
 const canvasElement = document.getElementById("output_canvas")
 const canvasCtx = canvasElement.getContext("2d");
 const canvasHands = document.querySelector('#landmarks')
-const drawingCanvas = document.querySelector('#drawing-canvas')
+// const drawingCanvas = document.querySelector('#drawing-canvas')
 const canvasHandsCtx = canvasHands.getContext('2d')
-const drawingCanvasCtx = drawingCanvas.getContext('2d')
+// const drawingCanvasCtx = drawingCanvas.getContext('2d')
 const indicator = document.querySelector('#input-indictor')
 const undoSign = document.querySelector('#undo-sign')
+const startBtn = document.querySelector('.Start-btn')
+const submitBtn = document.querySelector('.submit-btn')
 // Gesture btn
 const undoBtn = document.querySelector('#undo-btn')
 
+// Drawing status
+let drawingState = false
+
+// Set up p5js
 function setup() {
-    const canvas = createCanvas(1280, 720)
+    const canvas = createCanvas(800, 600)
     canvas.parent(canvasContainer)
     background(255);
     fill(255)
@@ -42,12 +49,38 @@ undoBtn.addEventListener('click', () => {
     setup()
 })
 
+// Start Btn
+startBtn.addEventListener('click', () => {
+    if (drawingState) {
+        drawingState = false
+        startBtn.textContent = 'Start'
+    } else {
+        drawingState = true
+        startBtn.textContent = 'Stop'
+    }
+})
+
+// Submit challenge
+submitBtn.addEventListener('click', async () => {
+    drawingState = false
+    startBtn.textContent = 'Start'
+    const data = document.querySelector('#defaultCanvas0').toDataURL('image/png')
+    const res = await fetch('/training', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ submission: data }),
+    })
+    indicator.textContent = "submitted"
+})
+
 async function enableCam() {
     // getUsermedia parameters.
     const constraints = {
         video: {
-            width: 1280,
-            height: 720
+            width: 1024,
+            height: 768
         }
     };
     // Activate the webcam stream.
@@ -58,8 +91,8 @@ async function enableCam() {
             canvasElement.height = video.videoHeight;
             canvasHands.width = video.videoWidth
             canvasHands.height = video.videoHeight
-            drawingCanvas.width = video.videoWidth
-            drawingCanvas.height = video.videoHeight
+            // drawingCanvas.width = video.videoWidth
+            // drawingCanvas.height = video.videoHeight
             // Take stream picture to server
             let prevX, prevY
             let centreX1, centreY1, centreX2, centreY2
@@ -69,123 +102,129 @@ async function enableCam() {
             canvasCtx.setTransform(-1, 0, 0, 1, canvasElement.width, 0)
 
             setInterval(async () => {
-                canvasCtx.drawImage(video, 0, 0)
-                const data = canvasElement.toDataURL('image/jpeg')
-                const res = await fetch('/frame', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ frame: data }),
-                })
-                const result = await res.json()
+                if (drawingState) {
 
-                // Draw hands shape in other canvas
-                // canvasHandsCtx.save()
-                canvasHandsCtx.clearRect(0, 0, canvasHands.width, canvasHands.height);
-                // Draw line mode (single hand)
-                if (result.landmarks.length === 1) {
-                    indicator.textContent = "Single Hand"
-                    indicator.style.backgroundColor = "green"
-                    // Draw hand shape
-                    drawConnectors(canvasHandsCtx, result.landmarks[0], HAND_CONNECTIONS, {
-                        color: "#00FF00",
-                        lineWidth: 2
-                    });
+                    canvasCtx.drawImage(video, 0, 0)
+                    const data = canvasElement.toDataURL('image/jpeg', 0.5)
+                    const res = await fetch('/frame', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ frame: data }),
+                    })
+                    const result = await res.json()
 
-                    // If index and thumb are close
-                    if (result.checkDraw.check) {
-                        const centreX = result.checkDraw.hands_lms_list[0].centre_XY[0]
-                        const centreY = result.checkDraw.hands_lms_list[0].centre_XY[1]
-                        indicator.textContent = "Drawing Line"
-                        indicator.style.backgroundColor = "grey"
-                        // Draw mode indicator
-                        drawLandmarks(canvasHandsCtx, [{ x: centreX / video.videoWidth, y: centreY / video.videoHeight }], { color: "#FF0000", lineWidth: 5 });
-                        if (!prevX && !prevY) {
-                            prevX = centreX
-                            prevY = centreY
-                        }
-                        // Painting
-                        drawLine(centreX, centreY, prevX, prevY)
-                        prevX = centreX
-                        prevY = centreY
-                    } else if (result.fingersUp.length == 1) {
-                        // if (result.fingersUp.includes(8)) {
-                            const indexX = result.landmarksInPixel[0][8][1]
-                            const indexY = result.landmarksInPixel[0][8][2]
-                            if (!prevX && !prevY) {
+                    // Draw hands shape in other canvas
+                    // canvasHandsCtx.save()
+                    canvasHandsCtx.clearRect(0, 0, canvasHands.width, canvasHands.height);
+                    // Draw line mode (single hand)
+                    if (result.landmarks.length === 1) {
+                        indicator.textContent = "Single Hand"
+                        indicator.style.backgroundColor = "green"
+                        // Draw hand shape
+                        drawConnectors(canvasHandsCtx, result.landmarks[0], HAND_CONNECTIONS, {
+                            color: "#00FF00",
+                            lineWidth: 2
+                        });
+                        // Check undo gesture
+                        if (result.fingersUp.length == 0) {
+                            // Undo gesture threshold = 3000ms
+                            if (undoCounter === 1020) {
+                                undoSign.textContent = "Undo in 2 Sec"
+                                undoSign.classList.remove('output-data')
+                            } else if (undoCounter === 2040) {
+                                undoSign.textContent = "Undo in 1 Sec"
+                            } else if (undoCounter === 3000) {
+                                undoBtn.click()
+                                undoSign.classList.add('output-data')
+                            }
+                            undoCounter += 60
+
+                        } else {
+                            // If index and thumb are close
+                            if (result.checkDraw.check) {
+                                const centreX = result.checkDraw.hands_lms_list[0].centre_XY[0]
+                                const centreY = result.checkDraw.hands_lms_list[0].centre_XY[1]
+                                indicator.textContent = "Drawing Line"
+                                indicator.style.backgroundColor = "grey"
+                                // Draw mode indicator
+                                drawLandmarks(canvasHandsCtx, [{ x: centreX / video.videoWidth, y: centreY / video.videoHeight }], { color: "#FF0000", lineWidth: 5 });
+                                if (!prevX && !prevY) {
+                                    prevX = centreX
+                                    prevY = centreY
+                                }
+                                // Painting
+                                drawLine(centreX, centreY, prevX, prevY)
+                                prevX = centreX
+                                prevY = centreY
+                            } else if (result.fingersUp.length == 1) {
+                                const indexX = result.landmarksInPixel[0][8][1]
+                                const indexY = result.landmarksInPixel[0][8][2]
+                                if (!prevX && !prevY) {
+                                    prevX = indexX
+                                    prevY = indexY
+                                }
+                                indicator.textContent = "Rubber mode"
+                                indicator.style.backgroundColor = "grey"
+                                clearLine(result.landmarksInPixel[0][8][1], result.landmarksInPixel[0][8][2], prevX, prevY)
+                                drawLandmarks(canvasHandsCtx, [{ x: result.checkDraw.hands_lms_list[0].index_XY[0] / video.videoWidth, y: result.checkDraw.hands_lms_list[0].index_XY[1] / video.videoHeight }],
+                                    { color: "grey", lineWidth: 3 });
                                 prevX = indexX
                                 prevY = indexY
                             }
-                            indicator.textContent = "Rubber mode"
-                            indicator.style.backgroundColor = "grey"
-                            clearLine(result.landmarksInPixel[0][8][1], result.landmarksInPixel[0][8][2], prevX, prevY)
-                            drawLandmarks(canvasHandsCtx, [{ x: result.checkDraw.hands_lms_list[0].index_XY[0] / video.videoWidth, y: result.checkDraw.hands_lms_list[0].index_XY[1] / video.videoHeight }],
-                                { color: "grey", lineWidth: 3 });
-                            prevX = indexX
-                            prevY = indexY
-                        // }
-                    // Undo gesture threshold = 3000ms
-                    } else if (result.fingersUp.length == 0){
-                        if (undoCounter === 1020){
-                            undoSign.textContent = "Undo in 2 Sec"
-                            undoSign.classList.remove('output-data')
-                        } else if (undoCounter ===2040){
-                            undoSign.textContent = "Undo in 1 Sec"
-                        } else if (undoCounter === 3000){
-                            undoBtn.click()
-                            undoSign.classList.add('output-data')
+                            else {
+                                undoSign.classList.add('output-data')
+                                undoCounter = 0
+                                prevX = 0
+                                prevY = 0
+                            }
                         }
-                        undoCounter += 60
-                    } 
-                    else {
-                        undoSign.classList.add('output-data')
-                        undoCounter = 0
-                        prevX = 0
-                        prevY = 0
                     }
                     // Two hand mode (For drawing circle and square)
-                } else if (result.landmarks.length === 2) {
-                    indicator.textContent = "Two Hands"
-                    indicator.style.backgroundColor = "blue"
-                    for (const handLandmark of result.landmarks) {
-                        drawConnectors(canvasHandsCtx, handLandmark, HAND_CONNECTIONS, {
-                            color: "#0000FF",
-                            lineWidth: 2
-                        });
+                    // else if (result.landmarks.length === 2) {
+                    //     indicator.textContent = "Two Hands"
+                    //     indicator.style.backgroundColor = "blue"
+                    //     for (const handLandmark of result.landmarks) {
+                    //         drawConnectors(canvasHandsCtx, handLandmark, HAND_CONNECTIONS, {
+                    //             color: "#0000FF",
+                    //             lineWidth: 2
+                    //         });
+                    //     }
+                    //     if (result.checkDraw.check && result.checkDraw.hands_lms_list.length > 1) {
+                    //         indicator.textContent = "Drawing Circle"
+                    //         indicator.style.backgroundColor = "silver"
+                    //         drawOvalMode = true
+                    //         centreX1 = result.checkDraw.hands_lms_list[0].centre_XY[0]
+                    //         centreY1 = result.checkDraw.hands_lms_list[0].centre_XY[1]
+                    //         centreX2 = result.checkDraw.hands_lms_list[1].centre_XY[0]
+                    //         centreY2 = result.checkDraw.hands_lms_list[1].centre_XY[1]
+                    //         drawLandmarks(canvasHandsCtx, [{ x: centreX1 / video.videoWidth, y: centreY1 / video.videoHeight }],
+                    //             { color: "#FF0000", lineWidth: 5 });
+                    //         drawLandmarks(canvasHandsCtx, [{ x: centreX2 / video.videoWidth, y: centreY2 / video.videoHeight }],
+                    //             { color: "#00FF00", lineWidth: 5 });
+                    //     } else {
+                    //         drawOvalMode = false
+                    //     }
+                    //     if (!drawOvalMode && centreX1 > 0 && centreX2 > 0) {
+                    //         const w = Math.hypot(centreX1 - centreX2)
+                    //         const h = Math.hypot(centreY1 - centreY2)
+                    //         const x1 = (centreX1 + centreX2) / 2
+                    //         const y1 = (centreY1 + centreY2) / 2
+                    //         centreX1 = 0
+                    //         centreY1 = 0
+                    //         centreX2 = 0
+                    //         centreY2 = 0
+                    //         drawOval(x1, y1, w, h)
+                    //     }
+                    // } 
+                    else {
+                        indicator.textContent = "Not detected"
+                        indicator.style.backgroundColor = "white"
                     }
-                    if (result.checkDraw.check && result.checkDraw.hands_lms_list.length > 1) {
-                        indicator.textContent = "Drawing Circle"
-                        indicator.style.backgroundColor = "silver"
-                        drawOvalMode = true
-                        centreX1 = result.checkDraw.hands_lms_list[0].centre_XY[0]
-                        centreY1 = result.checkDraw.hands_lms_list[0].centre_XY[1]
-                        centreX2 = result.checkDraw.hands_lms_list[1].centre_XY[0]
-                        centreY2 = result.checkDraw.hands_lms_list[1].centre_XY[1]
-                        drawLandmarks(canvasHandsCtx, [{ x: centreX1 / video.videoWidth, y: centreY1 / video.videoHeight }],
-                            { color: "#FF0000", lineWidth: 5 });
-                        drawLandmarks(canvasHandsCtx, [{ x: centreX2 / video.videoWidth, y: centreY2 / video.videoHeight }],
-                            { color: "#00FF00", lineWidth: 5 });
-                    } else {
-                        drawOvalMode = false
-                    }
-                    if (!drawOvalMode && centreX1 > 0 && centreX2 > 0) {
-                        const w = Math.hypot(centreX1 - centreX2)
-                        const h = Math.hypot(centreY1 - centreY2)
-                        const x1 = (centreX1 + centreX2) / 2
-                        const y1 = (centreY1 + centreY2) / 2
-                        centreX1 = 0
-                        centreY1 = 0
-                        centreX2 = 0
-                        centreY2 = 0
-                        drawOval(x1, y1, w, h)
-                    }
-                } else {
-                    indicator.textContent = "Not detected"
-                    indicator.style.backgroundColor = "white"
                 }
                 // canvasHandsCtx.restore()
-            }, 55)
+            }, 50)
         });
     });
 }

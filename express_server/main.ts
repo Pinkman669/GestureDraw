@@ -41,6 +41,24 @@ app.post('/frame', async (req: Request, res: Response) => {
     }
 })
 
+app.post('/training', async (req:Request, res: Response)=>{
+    try{
+        const submission = req.body.submission
+        const resSanic = await fetch('http://127.0.0.1:8000/training', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ submission: submission }),
+        })
+        const result = await resSanic.json()
+        res.json({ success: true , msg: result})
+    } catch(e){
+        console.log(e)
+        res.json({success: false})
+    }
+})
+
 const PORT = 8080
 
 app.listen(PORT, () => {
