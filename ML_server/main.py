@@ -24,6 +24,7 @@ def drawing(request):
         return json({"landmarks_in_pixel": lms_list_in_pixel, "landmarks": hands_list, "enable_draw": check_result, "fingers_up": fingers_up})
     except:
         print('no')
+        return json({"success": False})
 
 @app.post('/training')
 def compare_picture(request):
@@ -34,9 +35,25 @@ def compare_picture(request):
         nparr = np.frombuffer(decoded_img, np.uint8)
         img = cv2.imdecode(nparr, 1)
         cv2.imwrite('submission.jpg', img)
-        return json({"success": True})
+        return json({"success": True, "score": 85})
     except:
         print('error!')
+        return json({"success": False})
+
+@app.post('/count-down')
+def compare_picture_set(request):
+    try:
+        submission_set = request.json
+        for index, submission in enumerate(submission_set):
+            encoded_img = submission_set[submission].split(',')[1]
+            decoded_img = base64.b64decode(encoded_img)
+            nparr = np.frombuffer(decoded_img, np.uint8)
+            img = cv2.imdecode(nparr, 1)
+            cv2.imwrite(f'submission-{index + 1}.jpg', img)
+        return json({"success": True, "score": 80})
+    except:
+        print('error from picture_set')
+        return json({"success": False})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, single_process=False)

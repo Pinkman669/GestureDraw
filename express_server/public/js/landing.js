@@ -8,6 +8,6 @@ document
 		// Get saved data from sessionStorage
 		let data = sessionStorage.getItem("username");
 
-		window.location = "./game.html"
+		window.location = "./training.html"
 		
 	});

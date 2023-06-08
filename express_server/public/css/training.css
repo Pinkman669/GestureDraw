@@ -16,6 +16,7 @@ body{
 .game-header{
     display: flex;
     justify-content: space-around;
+    padding: 10px;
 }
 
 #challenge-photo{
@@ -47,12 +48,7 @@ body{
     max-width: 1050px;
 }
 
-.controller-panel{
-    margin: 10px 0;
-}
-
 .form-select{
-    margin: 10px 0;
     width: auto;
 }
 
@@ -112,14 +108,26 @@ body{
     flex-direction: column;
 }
 
-#btn {
+.game-mode-btn {
     margin: 10px;
     padding: 10px;
+}
+
+.select-mode > button > a{
+    text-decoration: none;
+    color: white;
+}
+
+.hidden-btn{
+    display: none;
 }
 
 @media screen and (max-width: 500px){
     .container-fluid.game-details{
         max-width: 500px;
+    }
+    .demo-container{
+        flex-direction: column;
     }
     .container-fluid.game-canvas{
         max-width: 500px;

@@ -2,9 +2,16 @@ const challengeSelector = document.querySelector('#challenge-selector')
 const challengeImg = document.querySelector('#challenge-photo')
 const hasGetUserMedia = async () => !!navigator.mediaDevices?.getUserMedia
 const submitBtn = document.querySelector('.submit-btn')
+let webcamWidth, webcamHeight
+const trainingMode = true
 
+if (window.innerWidth <= 500){
+  [webcamWidth, webcamHeight] = [400, 600]
+} else{
+  [webcamWidth, webcamHeight] = [1024, 768]
+}
 if (hasGetUserMedia()) {
-    enableCam()
+    enableCam(webcamWidth, webcamHeight, true)
 } else {
   console.warn("getUserMedia() is not supported by your browser")
 }
