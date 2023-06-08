@@ -126,9 +126,6 @@ body{
     .container-fluid.game-details{
         max-width: 500px;
     }
-    .demo-container{
-        flex-direction: column;
-    }
     .container-fluid.game-canvas{
         max-width: 500px;
     }
