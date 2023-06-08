@@ -1,11 +1,11 @@
+import mediapipe as mp
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
+
 submitted_image = 'submission.jpg'
 challenge_image = 'challenge_photos/dog_image.png'
 
 IMAGE_FILENAMES = [submitted_image, challenge_image]
-
-import mediapipe as mp
-from mediapipe.tasks import python
-from mediapipe.tasks.python import vision
 
 # Create options for Image Embedder
 base_options = python.BaseOptions(model_asset_path='model/mobilenet_v3_small_075_224_embedder.tflite')
@@ -29,3 +29,6 @@ with vision.ImageEmbedder.create_from_options(options) as embedder:
       first_embedding_result.embeddings[0],
       second_embedding_result.embeddings[0])
   print(similarity)
+
+# convert similaritly to score
+score = round(similarity *100)
