@@ -77,13 +77,13 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
         const data = document.querySelector('#defaultCanvas0').toDataURL('image/png')
         // training mode
         if (trainingMode) {
+            const challenge = document.querySelector('#challenge-selector').value 
             const res = await fetch('/game/training', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ submission: data}),
-                // body: JSON.stringify({ submission: data, challenge: challenge}),
+                body: JSON.stringify({ submission: data, challenge: challenge}),
             })
 
             const result = await res.json()
