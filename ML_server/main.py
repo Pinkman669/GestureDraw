@@ -1,3 +1,4 @@
+from ML_server.image_embedder import image_embedding
 from sanic import Sanic
 from sanic.response import json
 import base64
@@ -34,8 +35,15 @@ def compare_picture(request):
         decoded_img = base64.b64decode(encoded_img)
         nparr = np.frombuffer(decoded_img, np.uint8)
         img = cv2.imdecode(nparr, 1)
-        cv2.imwrite('submission.jpg', img)
-        return json({"success": True, "score": 85})
+        submitted_image = img
+
+        challenge_image= f"challenge_photos/{submission['challenge']}.png"
+       
+        result = image_embedding(submitted_image,challenge_image)
+
+        score = round(result*100)
+        
+        return json({"success": True, "score": score})
     except:
         print('error!')
         return json({"success": False})
@@ -49,11 +57,12 @@ def compare_picture_set(request):
             decoded_img = base64.b64decode(encoded_img)
             nparr = np.frombuffer(decoded_img, np.uint8)
             img = cv2.imdecode(nparr, 1)
-            cv2.imwrite(f'submission-{index + 1}.jpg', img)
+            # cv2.imwrite(f'submission-{index + 1}.jpg', img)
         return json({"success": True, "score": 80})
     except:
         print('error from picture_set')
         return json({"success": False})
+    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, single_process=False)

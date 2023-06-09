@@ -82,7 +82,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ submission: data }),
+                body: JSON.stringify({ submission: data, challenge: challenge}),
             })
 
             const result = await res.json()
