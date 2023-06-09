@@ -26,3 +26,7 @@ function loadChallengePhoto(index){
     challengeImg.setAttribute('src', `./challenge_photos/challenge-${index}.png`)
   }
 }
+
+submitBtn.addEventListener('click', (event) => {
+  
+})

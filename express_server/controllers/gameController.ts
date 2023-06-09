@@ -30,7 +30,7 @@ export class GameController {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ submission: submission }),
+                body: JSON.stringify({ submission: submission, challenge: challenge }),
             })
             const result = await resSanic.json()
             res.json({ success: true, score: result.score })
