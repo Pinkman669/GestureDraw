@@ -8,7 +8,7 @@ export class GameController {
     postFrame = async (req: Request, res: Response) => {
             try {
                 const frame = req.body.frame
-                const resSanic = await fetch('http://127.0.0.1:8000/', {
+                const resSanic = await fetch('https://hand-drawing.pinkman.world/', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -30,7 +30,8 @@ export class GameController {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ submission: submission, challenge: challenge }),
+                // body: JSON.stringify({ submission: submission, challenge: challenge }),
+                body: JSON.stringify({ submission: submission }),
             })
             const result = await resSanic.json()
             res.json({ success: true, score: result.score })

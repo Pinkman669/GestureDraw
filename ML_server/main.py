@@ -1,4 +1,4 @@
-from ML_server.image_embedder import image_embedding
+from image_embedder import image_embedding
 from sanic import Sanic
 from sanic.response import json
 import base64
@@ -37,10 +37,11 @@ def compare_picture(request):
         img = cv2.imdecode(nparr, 1)
         submitted_image = img
 
-        challenge_image= f"challenge_photos/{submission['challenge']}.png"
+        # challenge_image= f"challenge_photos/{submission['challenge']}.png"
+        challenge_image = f'challenge_photos/dog.PNG'
        
         result = image_embedding(submitted_image,challenge_image)
-
+        print(result)
         score = round(result*100)
         
         return json({"success": True, "score": score})

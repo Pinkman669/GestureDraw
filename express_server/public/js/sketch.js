@@ -128,6 +128,21 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
         indicator.style.color = "white"
     })
 
+    // save image
+    if (trainingMode){
+        const saveBtn = document.querySelector('.save-btn')
+        saveBtn.addEventListener('click', ()=>{
+            const link = document.createElement('a')
+            link.href = document.querySelector('#defaultCanvas0').toDataURL('image/png')
+            link.setAttribute('download', 'hand-drawing')
+            link.style.display = 'none'
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            delete(link)
+        })
+    }
+
     // getUsermedia parameters.
     const constraints = {
         video: {
