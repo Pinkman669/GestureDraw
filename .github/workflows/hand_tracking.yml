@@ -31,3 +31,28 @@ jobs:
           yarn knex migrate:latest --env test
           yarn knex seed:run
           yarn jest
+  deploy:
+    if: github.ref_name == 'production'
+    runs-on: ubuntu-latest
+    needs: testing
+    steps:
+      - name: ssh to pull latest version and restart
+        uses: appleboy/ssh-action@master
+        with:
+          script: |
+            cd express_server
+            git pull origin main
+            yarn install
+            yarn knex migrate:latest --env production
+            pm2 restart express-server
+            cd ..
+            cd ML_server
+            source mp_python/bin/activate
+            pip install -r requirements.txt
+            pm2 restart ml-server
+          host: hand-drawing.pinkman.world
+          username: ubuntu
+          port: 22
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+
+

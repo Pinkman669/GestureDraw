@@ -25,7 +25,6 @@ class handDetector():
     def findPosition(self, img):
         hands_list = []
         self.hands_list_in_pixel = []
-        # self.lms_list_in_pixel = []
         # Convert to rgb image for detection
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         # hand detection
