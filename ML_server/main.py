@@ -37,7 +37,7 @@ def compare_picture(request):
         img = cv2.imdecode(nparr, 1)
         submitted_image = img
 
-        challenge_image= f"challenge_photos/{submission['challenge']}.png"
+        challenge_image= f"challenge_photos/challenge-{submission['challenge']}.png"
        
         result = image_embedding(submitted_image,challenge_image)
 

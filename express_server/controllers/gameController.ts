@@ -25,12 +25,13 @@ export class GameController {
     postTraining = async (req: Request, res: Response) => {
         try {
             const submission = req.body.submission
+            const challenge = req.body.challenge
             const resSanic = await fetch('http://127.0.0.1:8000/training', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ submission: submission, challenge: challenge }),
+                body: JSON.stringify({ submission: submission, challenge: challenge}),
             })
             const result = await resSanic.json()
             res.json({ success: true, score: result.score })
