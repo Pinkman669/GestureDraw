@@ -1,4 +1,4 @@
-from ML_server.image_embedder import image_embedding
+from image_embedder import image_embedding
 from sanic import Sanic
 from sanic.response import json
 import base64
@@ -29,7 +29,7 @@ def drawing(request):
 
 @app.post('/training')
 def compare_picture(request):
-    try:
+    # try:
         submission = request.json
         encoded_img = submission['submission'].split(',')[1]
         decoded_img = base64.b64decode(encoded_img)
@@ -42,11 +42,13 @@ def compare_picture(request):
         result = image_embedding(submitted_image,challenge_image)
 
         score = round(result*100)
+        print(f"result:{result}")
+        print(f"score:{score}")
         
         return json({"success": True, "score": score})
-    except:
-        print('error!')
-        return json({"success": False})
+    # except Exception as error:
+    #     print(error)
+    #     return json({"success": False})
 
 @app.post('/count-down')
 def compare_picture_set(request):
