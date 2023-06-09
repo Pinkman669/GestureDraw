@@ -91,10 +91,9 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                 scoreBoard.innerHTML += `<div>Your score: ${result.score}</div>`
                 scoreBtn.click()
             }
-            setup()
             // count-down mode
         } else {
-            if (challengeIndex === 1) {
+            if (challengeIndex === 3) {
                 submissionSet.set(`challenge${challengeIndex}`, data)
                 const username = sessionStorage.getItem('username') || 'Guest'
                 const res = await fetch('/game/count-down', {
@@ -104,15 +103,16 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                     },
                     body: JSON.stringify({ submissionSet: Object.fromEntries(submissionSet), username: username }),
                 })
+
                 submissionSet.clear()
                 challengeIndex = 1
                 const result = await res.json()
                 if (result.success) {
                     console.log('challenge completed')
                     scoreBoard.innerHTML = ``
-                    scoreBoard.innerHTML += `<div> Your score: ${result.score}</div>
+                    scoreBoard.innerHTML += `<div> Your name: ${result.username}</div>
+                                            <div> Your score: ${result.score}</div>
                                             <div> Your rank: ${result.rank}</div>
-                                            <div> Your name: ${result.username}</div>
                                             `
                     scoreBtn.click()
                 }
@@ -126,7 +126,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
         indicator.style.backgroundColor = "black"
         indicator.style.color = "white"
     })
-    console.log(sessionStorage.getItem('username'))
+
     // getUsermedia parameters.
     const constraints = {
         video: {
@@ -164,6 +164,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                     const result = await res.json()
 
                     // Draw hands shape in other canvas
+                    canvasHandsCtx.save();
                     canvasHandsCtx.clearRect(0, 0, canvasHands.width, canvasHands.height);
                     // Draw line mode (single hand)
                     if (result.landmarks.length === 1) {
@@ -270,6 +271,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                         indicator.textContent = "Not detected"
                         indicator.style.backgroundColor = "white"
                     }
+                    canvasHandsCtx.restore();
                 }
             }, 50)
         });

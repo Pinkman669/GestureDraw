@@ -5,6 +5,7 @@ const startCountDiv = document.querySelector('#start-count')
 const timer = document.querySelector('#timer')
 const hasGetUserMedia = async () => !!navigator.mediaDevices?.getUserMedia
 const submitBtn = document.querySelector('.submit-btn')
+const restartBtn = document.querySelector('#restart-btn')
 let webcamWidth, webcamHeight
 let challengeIndex = 1
 let countDown = 10
@@ -48,18 +49,29 @@ startGameBtn.addEventListener('click', (e) => {
 })
 
 // Submit challenge
-submitBtn.addEventListener('click', () => {
+submitBtn.addEventListener('click', (e) => {
   if (challengeIndex <= 2){
     challengeIndex++
     loadChallengePhoto(challengeIndex)
     startGameBtn.removeAttribute('disabled')
     startGameBtn.click()
+  } else{
+    challengeIndex = 1
   }
   timer.textContent = '10'
   drawingState = false
   submitClick = true
   startBtn.setAttribute('disabled', '')
   submitBtn.setAttribute('disabled', '')
+})
+
+// restart game
+restartBtn.addEventListener('click', (e)=>{
+  startGameBtn.removeAttribute('disabled')
+  indicator.textContent = ''
+  indicator.style.color = 'black'
+  indicator.style.backgroundColor = 'white'
+  challengeImg.setAttribute('src', ``)
 })
 
 function startTimer(reset = true) {
