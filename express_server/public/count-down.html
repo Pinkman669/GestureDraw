@@ -18,7 +18,7 @@
                 <button type="button" class="btn btn-dark start-game-btn">Start Game</button>
             </div>
             <div id="timer-div">
-                <p id="timer">10</p>
+                <p id="timer">30</p>
             </div>
             <div class="controller-panel">
                 <button disabled type="button" class="btn btn-success start-btn">Start</button>
@@ -32,7 +32,10 @@
             <video class="output-data drawing-utils" id="webcam" muted autoplay playsinline></video>
             <canvas class="output-data drawing-utils" id="output_canvas"></canvas>
             <canvas class="drawing-utils" id="landmarks"></canvas>
-            <canvas class="drawing-utils" id="drawing-canvas"></canvas>
+            <!-- <canvas class="drawing-utils" id="drawing-canvas"></canvas> -->
+            <div id="p5-canvas-container">
+
+            </div>
             <img id="challenge-photo" src="" alt="">
             <div id="undo-sign" class="output-data"></div>
             <div id="start-count"></div>
@@ -52,8 +55,6 @@
 
             <div class="select-mode">
                 <h1>Game Mode:</h1>
-                <button type="button" class="btn btn-dark game-mode-btn">
-                    <a href="">free draw</a></button>
                 <button type="button" class="btn btn-dark game-mode-btn">
                     <a href="./training.html">training</a></button>
                 <button type="button" class="btn btn-dark game-mode-btn">

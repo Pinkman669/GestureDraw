@@ -8,7 +8,7 @@ const submitBtn = document.querySelector('.submit-btn')
 const restartBtn = document.querySelector('#restart-btn')
 let webcamWidth, webcamHeight
 let challengeIndex = 1
-let countDown = 10
+let countDown = 30
 let submitClick = false
 const trainingMode = false
 
@@ -50,7 +50,7 @@ startGameBtn.addEventListener('click', (e) => {
 
 // Submit challenge
 submitBtn.addEventListener('click', (e) => {
-  if (challengeIndex <= 2){
+  if (challengeIndex <= 4){
     challengeIndex++
     loadChallengePhoto(challengeIndex)
     startGameBtn.removeAttribute('disabled')
@@ -58,7 +58,7 @@ submitBtn.addEventListener('click', (e) => {
   } else{
     challengeIndex = 1
   }
-  timer.textContent = '10'
+  timer.textContent = '30'
   drawingState = false
   submitClick = true
   startBtn.setAttribute('disabled', '')
@@ -81,12 +81,12 @@ function startTimer(reset = true) {
       if (!submitClick){
         submitBtn.click()
       }
-      countDown = 10
+      countDown = 30
       clearInterval(looper)
       submitClick = false
     } else {
       const elaspedTime = (Date.now() - startTime) / 1000
-      const displayTime = 10 - elaspedTime
+      const displayTime = 30 - elaspedTime
       timer.textContent = displayTime.toFixed(0)
       countDown -= 1
     }

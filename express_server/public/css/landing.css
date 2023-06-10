@@ -1,70 +1,74 @@
-body{
+body {
     background-color: #DCDCDC;
 }
 
-.main{
-  display: grid;
+.container-fluid.main {
+    /* display: grid;
   grid-template-columns: auto ;
   grid-gap: 50px;
   padding: 10px;
-  height: 100%;
-  margin:50px;
+  height: 100%; */
+    max-width: 1280px;
 }
 
+.container-fluid.main>div {
+    margin: 50px 0;
+}
 
-#pre-game{
-    grid-column: 1 / span 2;
+#pre-game {
+    border: 7px solid #F0C14E;
+    /* grid-column: 1 / span 2; */
     text-align: center;
     min-height: fit-content;
     padding: 100px 0;
-    outline: 7px solid #F0C14E;
-    background-image:url('');
+    /* outline: 7px solid #F0C14E; */
+    background-image: url('');
     border-radius: 25px;
 }
 
-h1{
+h1 {
     font-size: 100px;
 }
 
-.game-introduction-container{
-     display: flex;
-}
-#introduction{
-    outline: 7px solid #4B88C6;
-    
+#introduction {
+    /* outline: 7px solid #4B88C6; */
+    border: 7px solid #4B88C6;
     border-radius: 25px;
-    padding:20px;
+    padding: 20px;
     text-align: center;
-    max-height: 300px;
 
 }
-#how-to-play{
-    outline: 7px solid #4B88C6;
+
+#how-to-play {
+    /* outline: 7px solid #4B88C6; */
+    border: 7px solid #4B88C6;
     border-radius: 25px;
-    padding:20px;
+    padding: 20px;
     text-align: center;
     min-height: fit-content;
 }
 
-.title{
+.title {
     font-size: 50px;
     color: #000;
 }
 
-.content{
+.content {
     font-size: 20px;
     color: #000;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
-input{
-   
+
+input {
+
     border: 5px solid #000;
     border-radius: 25px;
     padding: 16px 32px;
     margin: 4px 2px;
-   
+
 }
-#start-btn{
-    
+
+#start-btn {
     border: 5px solid #000;
     border-radius: 25px;
     color: #000;
@@ -73,6 +77,33 @@ input{
     cursor: pointer;
     font-weight: 700;
 }
-@media screen and (max-width: 500px){
 
+#drawing-demo-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.video-div > video{
+    outline: 4px solid #DCDCDC;
+    outline-offset: -4px;
+}
+
+.demo-text{
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+@media screen and (max-width: 500px) {
+    .container-fluid.main {
+        max-width: 500px;
+    }
+    h1 {
+        font-size: 70px;
+    }
+    #drawing-demo-div {
+        display: flex;
+        flex-direction: column;
+
+    }
 }

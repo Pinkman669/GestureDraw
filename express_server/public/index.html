@@ -1,81 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ranking Chart</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./css/landing.css" />
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="./landing.html">Home</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Game
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="./training.html">Training mode </a></li>
-                <li><a class="dropdown-item" href="./count-down.html">Count down mode</a></li>
-                <li><a class="dropdown-item" href="#">Free draw mode</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="./ranking.html"
-                >Ranking Board</a>
-            </li>
-          </ul>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ranking Chart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/landing.css" />
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="./landing.html">Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Game
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="./training.html">Training mode </a></li>
+              <li><a class="dropdown-item" href="./count-down.html">Count down mode</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="./ranking.html">Ranking Board</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid main">
+    <div id="pre-game">
+      <h1>Draw Something</h1>
+      <input type="text" id="username" name="username" placeholder="Your name" required></input>
+      <button type="submit" id="start-btn">Start</button>
+    </div>
+
+    <div id="introduction">
+      <h2 class="title">Introduction</h2>
+      <div class="content">
+        In this game, you will be drawing with your bare hand. <br>Your finger act as the pen and draw on the screen.<br>
+        Get your camera and your hands ready.<br>Let's have some fun!
+      </div>
+    </div>
+    <div id="how-to-play">
+      <h2 class="title">How to play</h2>
+      <div id="drawing-demo-div">
+        <div class="video-div">
+          <video src="./drawing-demo/drawing-line_AdobeExpress.mp4" width="250" height="auto" autoplay loop muted></video>
+          <div class="demo-text">Drawing by doing a OK gesture.</div>
+        </div>
+        <div class="video-div">
+          <video src="./drawing-demo/clearing.mp4" width="250" height="auto" autoplay loop muted></video>
+          <div class="demo-text">Handed point up to clear.</div>
+        </div>
+        <div class="video-div">
+          <video src="./drawing-demo/undo_AdobeExpress.mp4" width="250" height="auto" autoplay loop muted></video>
+          <div class="demo-text">Make a fist closed to start over!</div>
         </div>
       </div>
-    </nav>
-        <div class="main">
-          <div id="pre-game">
-              <h1>Draw Something</h1>
-              <input type="text" id="username" name="username" placeholder="Your name" required></input>
-              <button type="submit" id="start-btn">Start</button>
-          </div>
-         
-            <div id="introduction">
-              <h2 class="title">Introduction</h2>
-              <div class="content">
-                  In this game, you will be drawing with your bare hand. Your finger act as the pen and draw on the screen.
-                  Get your camera and your hands ready. Let's have some fun.
-              </div>
-          </div>
-          <div id="how-to-play">
-              <h2 class="title">How to play</h2>
-              <div class="content">
-                <ul>
-                  <li>Activate drawing mode by doing a OK gesture(Detemined by distance between index and thumb).</li>
-                  <li>Using two hands to draw oval shape</li> 
-                  <li>handed point up to clear</li> 
-                  <li>handed and put down your index, middle, ring and pinky finger(Like doing a thumb up but pointing to yourself) to start over</li>
-              </ul>
-              </div>
-          </div>
-        </div>
-        <script src="js/landing.js"></script>
- </body>
+    </div>
+  </div>
+  <script src="js/landing.js"></script>
+</body>
+
 </html>

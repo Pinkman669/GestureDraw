@@ -1,5 +1,5 @@
 // Declare variables
-const canvasContainer = document.querySelector('#canvas-container')
+const canvasContainer = document.querySelector('#p5-canvas-container')
 const video = document.getElementById("webcam")
 const canvasElement = document.getElementById("output_canvas")
 const canvasCtx = canvasElement.getContext("2d");
@@ -24,7 +24,7 @@ let canvasWidth, canvasHeight
 if (window.innerWidth <= 500) {
     [canvasWidth, canvasHeight] = [400, 600]
 } else {
-    [canvasWidth, canvasHeight] = [800, 600]
+    [canvasWidth, canvasHeight] = [1024, 768]
 }
 
 // Set up p5js
@@ -94,7 +94,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
             }
             // count-down mode
         } else {
-            if (challengeIndex === 3) {
+            if (challengeIndex === 5) {
                 submissionSet.set(`challenge${challengeIndex}`, data)
                 const username = sessionStorage.getItem('username') || 'Guest'
                 const res = await fetch('/game/count-down', {

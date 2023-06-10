@@ -1,25 +1,48 @@
-body{
+body {
     background-color: #DCDCDC;
 }
 
-#canvas-container{
+#canvas-container {
     position: relative;
+    z-index: -1;
 }
-.output-data{
+
+.output-data {
     visibility: hidden;
 }
 
-.drawing-utils{
-    position:absolute;
+.drawing-utils {
+    position: absolute;
 }
 
-.game-header{
+#output_canvas, #webcam, #landmarks {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#p5-canvas-container{
+    overflow: hidden;
+    width: 800px;
+    height: 600px;
+    position: relative;
+    z-index: -1;
+}
+
+.p5Canvas{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.game-header {
     display: flex;
     justify-content: space-around;
     padding: 10px;
 }
 
-#challenge-photo{
+#challenge-photo {
     position: absolute;
     top: 0;
     right: 0;
@@ -28,31 +51,39 @@ body{
     opacity: 0.5;
 }
 
-#challenge-selector{
+#challenge-selector {
     background-color: #212529;
     color: white;
 }
 
-.container-fluid.game-canvas{
+.container-fluid.game-canvas {
     max-width: 1280px;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.container-fluid.game-details{
+.container-fluid.game-details {
     max-width: 1280px;
 }
 
-.container-fluid.quiz-select{
+.container-fluid.quiz-select {
     max-width: 1050px;
 }
 
-.form-select{
+.controller-panel {
+    display: flex;
+}
+
+.controller-panel>button {
+    margin: 0 2px;
+}
+
+.form-select {
     width: auto;
 }
 
-#input-indictor{
+#input-indictor {
     margin-top: 10px;
     width: 200px;
     text-align: center;
@@ -72,7 +103,7 @@ body{
     align-items: flex-end;
 }
 
-#undo-sign{
+#undo-sign {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -84,22 +115,22 @@ body{
     background-color: rgba(128, 128, 128, 0.852);
 }
 
-.gesture-container{
+.gesture-container {
     display: flex;
 }
 
-.gesture-btn-container > img{
+.gesture-btn-container>img {
     width: 200px;
     height: auto
 }
 
-.gesture-btn-container{
+.gesture-btn-container {
     position: relative;
     display: flex;
     align-items: flex-end;
 }
 
-.gesture-btn{
+.gesture-btn {
     position: absolute;
 }
 
@@ -113,20 +144,21 @@ body{
     padding: 10px;
 }
 
-.select-mode > button > a{
+.select-mode>button>a {
     text-decoration: none;
     color: white;
 }
 
-.hidden-btn{
+.hidden-btn {
     display: none;
 }
 
-@media screen and (max-width: 500px){
-    .container-fluid.game-details{
+@media screen and (max-width: 500px) {
+    .container-fluid.game-details {
         max-width: 500px;
     }
-    .container-fluid.game-canvas{
+
+    .container-fluid.game-canvas {
         max-width: 500px;
     }
 }

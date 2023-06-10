@@ -6,6 +6,10 @@ import cv2
 import numpy as np
 import handTrackingModule as htm
 
+import mediapipe as mp
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
+
 app = Sanic("project")
 
 # Hand detecetor
@@ -36,17 +40,8 @@ def compare_picture(request):
         nparr = np.frombuffer(decoded_img, np.uint8)
         img = cv2.imdecode(nparr, 1)
         submitted_image = img
-<<<<<<< HEAD
-
-        # challenge_image= f"challenge_photos/{submission['challenge']}.png"
-        challenge_image = f'challenge_photos/dog.PNG'
-       
-        result = image_embedding(submitted_image,challenge_image)
-        print(result)
-=======
         challenge_image= f"challenge_photos/challenge-{submission['challenge']}.png"
         result = image_embedding(submitted_image,challenge_image)
->>>>>>> f32246cb4ba83e82cda568b89c5cfe9bb7ec2536
         score = round(result*100)
         return json({"success": True, "score": score})
     # except Exception as error:
@@ -72,7 +67,6 @@ def compare_picture_set(request):
     # except:
     #     print('error from picture_set')
     #     return json({"success": False})
-    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, single_process=False)
