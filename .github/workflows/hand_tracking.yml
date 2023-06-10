@@ -45,11 +45,6 @@ jobs:
             yarn install
             yarn knex migrate:latest --env production
             pm2 restart express-server
-            cd ..
-            cd ML_server
-            source mp_python/bin/activate
-            pip install -r requirements.txt
-            pm2 restart ml-server
           host: hand-drawing.pinkman.world
           username: ubuntu
           port: 22
