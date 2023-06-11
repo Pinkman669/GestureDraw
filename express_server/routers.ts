@@ -2,12 +2,11 @@ import express from "express";
 import {  rankingController } from "./main";
 import { GameController } from "./controllers/gameController";
 
-
 export const rankingRoutes = () =>{
         const route = express.Router();
         route.get("/", rankingController.getRanking);
         route.post('/addUser', rankingController.addUserResult)
-        route.get('/getUserRank', rankingController.getUserRank)
+        route.post('/getUserRank', rankingController.getUserRank)
         return route;
 };
 

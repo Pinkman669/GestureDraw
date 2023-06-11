@@ -14,13 +14,6 @@ export class RankingService{
             .limit(10)
     }
 
-    // async getUserResult(userID: number){
-    //     return await this.knex
-    //         .select('id', 'username', 'score')
-    //         .from('scores')
-    //         .where('id', userID)
-    // }
-
     async getResultList(){
         return await this.knex
             .select('score', 'id')
