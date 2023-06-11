@@ -11,6 +11,7 @@ const startBtn = document.querySelector('.start-btn')
 const submitBtn = document.querySelector('.submit-btn')
 const scoreBtn = document.querySelector('#score-btn')
 const scoreBoard = document.querySelector('#score-board')
+const exitBtn = document.querySelector('.exit-btn')
 let challengeIndex = 1
 const submissionSet = new Map()
 // Gesture btn
@@ -67,6 +68,11 @@ startBtn.addEventListener('click', () => {
         drawingState = true
         startBtn.textContent = 'Stop'
     }
+})
+
+// Leave Btn
+exitBtn.addEventListener('click', ()=>{
+    window.location = './index.html'
 })
 
 async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {

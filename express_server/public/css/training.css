@@ -153,6 +153,10 @@ body {
     display: none;
 }
 
+#selector-div{
+    display: flex;
+}
+
 @media screen and (max-width: 500px) {
     .container-fluid.game-details {
         max-width: 500px;
@@ -160,5 +164,9 @@ body {
 
     .container-fluid.game-canvas {
         max-width: 500px;
+    }
+    #p5-canvas-container{
+        width: 400px;
+        height: 600px;
     }
 }

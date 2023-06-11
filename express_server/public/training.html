@@ -15,7 +15,8 @@
 <body>
     <div class="container-fluid quiz-select">
         <div class="game-header">
-            <div>
+            <div id="selector-div">
+                <button type="button" class="btn btn-dark exit-btn"><i class="bi bi-box-arrow-left"></i></button>
                 <select class="form-select" id="challenge-selector" aria-label="Default select example">
                     <option selected disabled>Select Challenge</option>
                     <option value="1">Dog</option>
@@ -37,7 +38,6 @@
             <video class="output-data drawing-utils" id="webcam" muted autoplay playsinline></video>
             <canvas class="output-data drawing-utils" id="output_canvas"></canvas>
             <canvas class="drawing-utils" id="landmarks"></canvas>
-            <!-- <canvas class="drawing-utils" id="drawing-canvas"></canvas> -->
             <div id="p5-canvas-container">
 
             </div>

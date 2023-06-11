@@ -8,6 +8,7 @@
     <title>Training mode</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./css/count-down.css">
 </head>
 
@@ -15,6 +16,7 @@
     <div class="container-fluid quiz-select">
         <div class="game-header">
             <div>
+                <button type="button" class="btn btn-dark exit-btn"><i class="bi bi-box-arrow-left"></i></button>
                 <button type="button" class="btn btn-dark start-game-btn">Start Game</button>
             </div>
             <div id="timer-div">
@@ -23,7 +25,8 @@
             <div class="controller-panel">
                 <button disabled type="button" class="btn btn-success start-btn">Start</button>
                 <button disabled type="button" class="btn btn-success submit-btn">Submit</button>
-                <button type="button" id="score-btn" class="btn btn-primary hidden-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
+                <button type="button" id="score-btn" class="btn btn-primary hidden-btn" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"></button>
             </div>
         </div>
     </div>
@@ -63,7 +66,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -73,11 +76,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="score-board">
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="restart-btn" data-bs-dismiss="modal">Try again</button>
+                    <button type="button" class="btn btn-primary" id="restart-btn" data-bs-dismiss="modal">Try
+                        again</button>
                 </div>
             </div>
         </div>
