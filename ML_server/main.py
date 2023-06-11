@@ -61,7 +61,7 @@ def compare_picture_set(request):
             submitted_image=img
             challenge_image = f"challenge_photos/challenge-{index + 1}.png"
             result = image_embedding(submitted_image,challenge_image)
-            score = result/3
+            score = result/5
             total_score += round(score*100)
         return json({"success": True, "score": total_score})
     # except:
