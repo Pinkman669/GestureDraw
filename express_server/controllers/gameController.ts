@@ -63,7 +63,13 @@ export class GameController {
             })
             const resultAddUser = await resAddUser.json()
             req.session.userID = resultAddUser.userID
-            const resGetUserRank = await fetch('http://127.0.0.1:8080/ranking/getUserRank')
+            const resGetUserRank = await fetch(`http://127.0.0.1:8080/ranking/getUserRank`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({userID: req.session.userID}),
+            })
             const resultGetUserRank = await resGetUserRank.json()
             res.json({success: true, rank: resultGetUserRank.rank, score: result.score, username: username})
         }catch(e){
