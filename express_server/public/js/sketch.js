@@ -289,7 +289,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                     }
                     canvasHandsCtx.restore();
                 }
-            }, 50)
+            }, 70)
         });
     });
 }
