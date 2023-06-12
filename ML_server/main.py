@@ -15,6 +15,7 @@ app = Sanic("project")
 # Hand detecetor
 detector = htm.handDetector(detection_confidence=0.85)
 
+# name the path
 @app.post('/')
 def drawing(request):
     try:
@@ -31,6 +32,8 @@ def drawing(request):
         print('no')
         return json({"success": False})
 
+
+# no need two image compare endpoint
 @app.post('/training')
 def compare_picture(request):
     # try:

@@ -20,7 +20,6 @@ export class RankingController{
 	getUserRank = async (req: Request, res:Response) =>{
 		try{
 			const userID = Number(req.body.userID)
-			// const userScore = await this.rankingService.getUserResult(userID!)[0]
 			const resultList = await this.rankingService.getResultList()
 			let userRank: number = 0
 			resultList.forEach((result, index)=>{

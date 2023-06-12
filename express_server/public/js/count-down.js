@@ -26,6 +26,7 @@ if (hasGetUserMedia()) {
 // Start game
 startGameBtn.addEventListener('click', (e) => {
   let startCount = 3
+  // rename class
   startCountDiv.classList.remove('output-data')
   startCountDiv.textContent = ''
   startGameBtn.setAttribute('disabled', '')
@@ -48,7 +49,7 @@ startGameBtn.addEventListener('click', (e) => {
   }, 1000)
 })
 
-// Submit challenge
+// reset state
 submitBtn.addEventListener('click', (e) => {
   if (challengeIndex <= 4){
     challengeIndex++
@@ -78,6 +79,7 @@ function startTimer(reset = true) {
   const startTime = Date.now()
   const looper = setInterval(() => {
     if (countDown <= 1 || submitClick) {
+      // just call submit function
       if (!submitClick){
         submitBtn.click()
       }

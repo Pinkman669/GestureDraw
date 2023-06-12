@@ -1,15 +1,17 @@
 const challengeSelector = document.querySelector('#challenge-selector')
 const challengeImg = document.querySelector('#challenge-photo')
-const hasGetUserMedia = async () => !!navigator.mediaDevices?.getUserMedia
 const submitBtn = document.querySelector('.submit-btn')
-let webcamWidth, webcamHeight
 const trainingMode = true
+let webcamWidth, webcamHeight
+
+const hasGetUserMedia = async () => !!navigator.mediaDevices?.getUserMedia
 
 if (window.innerWidth <= 500){
   [webcamWidth, webcamHeight] = [400, 600]
-} else{
+} else {
   [webcamWidth, webcamHeight] = [1024, 768]
 }
+
 if (hasGetUserMedia()) {
     enableCam(webcamWidth, webcamHeight, true)
 } else {

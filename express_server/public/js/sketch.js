@@ -12,10 +12,12 @@ const submitBtn = document.querySelector('.submit-btn')
 const scoreBtn = document.querySelector('#score-btn')
 const scoreBoard = document.querySelector('#score-board')
 const exitBtn = document.querySelector('.exit-btn')
+const undoBtn = document.querySelector('#undo-btn')
+const frameIntervel = 70
+
 let challengeIndex = 1
 const submissionSet = new Map()
-// Gesture btn
-const undoBtn = document.querySelector('#undo-btn')
+
 
 // Drawing status
 let drawingState = false
@@ -76,63 +78,8 @@ exitBtn.addEventListener('click', ()=>{
 })
 
 async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
-    // Submit challenge
-    submitBtn.addEventListener('click', async () => {
-        drawingState = false
-        startBtn.textContent = 'Start'
-        const data = document.querySelector('#defaultCanvas0').toDataURL('image/png')
-        // training mode
-        if (trainingMode) {
-            const challenge = document.querySelector('#challenge-selector').value 
-            const res = await fetch('/game/training', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ submission: data, challenge: challenge}),
-            })
-
-            const result = await res.json()
-            if (result.success) {
-                scoreBoard.innerHTML = ``
-                scoreBoard.innerHTML += `<div>Your score: ${result.score}</div>`
-                scoreBtn.click()
-            }
-            // count-down mode
-        } else {
-            if (challengeIndex === 5) {
-                submissionSet.set(`challenge${challengeIndex}`, data)
-                const username = sessionStorage.getItem('username') || 'Guest'
-                const res = await fetch('/game/count-down', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ submissionSet: Object.fromEntries(submissionSet), username: username }),
-                })
-
-                submissionSet.clear()
-                challengeIndex = 1
-                const result = await res.json()
-                if (result.success) {
-                    console.log('challenge completed')
-                    scoreBoard.innerHTML = ``
-                    scoreBoard.innerHTML += `<div> Your name: ${result.username}</div>
-                                            <div> Your score: ${result.score}</div>
-                                            <div> Your rank: ${result.rank}</div>
-                                            `
-                    scoreBtn.click()
-                }
-            } else {
-                submissionSet.set(`challenge${challengeIndex}`, data)
-                challengeIndex++
-            }
-        }
-        setup()
-        indicator.textContent = "submitted"
-        indicator.style.backgroundColor = "black"
-        indicator.style.color = "white"
-    })
+    // handle submit challenge
+    submitChallenge(trainingMode)
 
     // save image
     if (trainingMode){
@@ -209,7 +156,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                                 undoBtn.click()
                                 undoSign.classList.add('output-data')
                             }
-                            undoCounter += 60
+                            undoCounter += frameIntervel
 
                         } else {
                             // If index and thumb are close
@@ -295,7 +242,66 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                     }
                     canvasHandsCtx.restore();
                 }
-            }, 70)
+            }, frameIntervel)
         });
     });
+}
+
+function submitChallenge (trainingMode) {
+    submitBtn.addEventListener('click', async () => {
+        drawingState = false
+        startBtn.textContent = 'Start'
+        const data = document.querySelector('#defaultCanvas0').toDataURL('image/png')
+        // training mode
+        if (trainingMode) {
+            const challenge = document.querySelector('#challenge-selector').value 
+            const res = await fetch('/game/training', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ submission: data, challenge: challenge}),
+            })
+
+            const result = await res.json()
+            if (result.success) {
+                scoreBoard.innerHTML = ``
+                scoreBoard.innerHTML += `<div>Your score: ${result.score}</div>`
+                scoreBtn.click()
+            }
+            // count-down mode
+        } else {
+            if (challengeIndex === 5) {
+                submissionSet.set(`challenge${challengeIndex}`, data)
+                const username = sessionStorage.getItem('username') || 'Guest'
+                const res = await fetch('/game/count-down', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ submissionSet: Object.fromEntries(submissionSet), username: username }),
+                })
+
+                submissionSet.clear()
+                challengeIndex = 1
+                const result = await res.json()
+                if (result.success) {
+                    console.log('challenge completed')
+                    scoreBoard.innerHTML = ``
+                    scoreBoard.innerHTML += `<div> Your name: ${result.username}</div>
+                                            <div> Your score: ${result.score}</div>
+                                            <div> Your rank: ${result.rank}</div>
+                                            `
+                    scoreBtn.click()
+                }
+            } else {
+                submissionSet.set(`challenge${challengeIndex}`, data)
+                challengeIndex++
+            }
+        }
+        setup()
+        indicator.textContent = "submitted"
+        indicator.style.backgroundColor = "black"
+        indicator.style.color = "white"
+    })
 }

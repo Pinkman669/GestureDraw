@@ -7,10 +7,8 @@ def image_embedding(submitted_image,challenge_image):
 
     # Create options for Image Embedder
     base_options = python.BaseOptions(model_asset_path='./model/mobilenet_v3_small_075_224_embedder.tflite')
-    l2_normalize = True #@param {type:"boolean"}
-    quantize = True #@param {type:"boolean"}
     options = vision.ImageEmbedderOptions(
-    base_options=base_options, l2_normalize=l2_normalize, quantize=quantize)
+        base_options=base_options, l2_normalize=True, quantize=True)
 
 
     # Create Image Embedder

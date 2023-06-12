@@ -48,6 +48,6 @@ jobs:
           host: hand-drawing.pinkman.world
           username: ubuntu
           port: 22
-          key: ${{secrets.SSH_PRIVATE_KEY}}
+          key: ${{secrets.PRIVATE_KEY}}
 
 
