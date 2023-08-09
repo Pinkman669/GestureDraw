@@ -5,9 +5,6 @@ document
 		// Save data to sessionStorage
 		sessionStorage.setItem("username",user);
 
-		// Get saved data from sessionStorage
-		let data = sessionStorage.getItem("username");
-
 		window.location = "./training.html"
 		
 	});

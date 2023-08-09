@@ -7,13 +7,13 @@ async function loadRanking(){
     let rank = 0;
     for ( let i of ranking){
         rank += 1;
-        rankingBoard.innerHTML+=`
-                                <tr>
-                                <th scope="row">${rank}</th>
-                                <td id="username">${i.username}</td>
-                                <td id="score">${i.score}</td>
-                                </tr>`
-       
+        rankingBoard.innerHTML += `
+            <tr>
+            <th scope="row">${rank}</th>
+            <td id="username">${i.username}</td>
+            <td id="score">${i.score}</td>
+            </tr>
+        `
     }
         
 }

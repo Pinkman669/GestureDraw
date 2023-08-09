@@ -41,6 +41,7 @@ class handDetector():
                 hands_list.append(lms_list)
                 self.hands_list_in_pixel.append(lms_list_in_pixel)
         return hands_list, self.hands_list_in_pixel
+    # rename
     def enable_draw(self):
         check_result = {"check": False, "hands_lms_list": []}
         if (len(self.hands_list_in_pixel)):

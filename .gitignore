@@ -1,7 +1,5 @@
-
 .env
+.pyenv
 mp_python
 node_modules
-newHandTrackingMod.py
-.pyenv
 __pycache__

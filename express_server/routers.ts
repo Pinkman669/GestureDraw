@@ -1,6 +1,6 @@
 import express from "express";
-import {  rankingController } from "./main";
-import { GameController } from "./controllers/gameController";
+import {  gameController, rankingController } from "./main";
+
 
 export const rankingRoutes = () =>{
         const route = express.Router();
@@ -12,7 +12,6 @@ export const rankingRoutes = () =>{
 
 export const gameRoutes = () =>{
         const route = express.Router()
-        const gameController = new GameController()
         route.post('/frame', gameController.postFrame)
         route.post('/training', gameController.postTraining)
         route.post('/count-down', gameController.postCountDown)

@@ -2,18 +2,15 @@ import { Request, Response } from 'express';
 import { logger } from '../logger';
 
 export class GameController {
-    constructor() {
-
-    }
     postFrame = async (req: Request, res: Response) => {
             try {
                 const frame = req.body.frame
-                const resSanic = await fetch('http://127.0.0.1:8000/', {
+                const resSanic = await fetch(process.env.ML_DOMAIN!, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ frame: frame }),
+                    body: JSON.stringify({ frame }),
                 })
                 const result = await resSanic.json()
                 res.json({ landmarksInPixel: result.landmarks_in_pixel, landmarks: result.landmarks , checkDraw: result.enable_draw, fingersUp: result.fingers_up})
@@ -63,6 +60,7 @@ export class GameController {
             })
             const resultAddUser = await resAddUser.json()
             req.session.userID = resultAddUser.userID
+            // POST better
             const resGetUserRank = await fetch(`http://127.0.0.1:8080/ranking/getUserRank`, {
                 method: "POST",
                 headers: {
