@@ -26,7 +26,6 @@ def image_embedding(submitted_image,challenge_image):
         similarity = vision.ImageEmbedder.cosine_similarity(
         first_embedding_result.embeddings[0],
         second_embedding_result.embeddings[0])
-        print(similarity)
 
     return(similarity)
 

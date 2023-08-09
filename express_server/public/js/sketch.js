@@ -115,7 +115,6 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                 challengeIndex = 1
                 const result = await res.json()
                 if (result.success) {
-                    console.log('challenge completed')
                     scoreBoard.innerHTML = ``
                     scoreBoard.innerHTML += `<div> Your name: ${result.username}</div>
                                             <div> Your score: ${result.score}</div>

@@ -33,7 +33,7 @@ def drawing(request):
 
 @app.post('/training')
 def compare_picture(request):
-    # try:
+    try:
         submission = request.json
         encoded_img = submission['submission'].split(',')[1]
         decoded_img = base64.b64decode(encoded_img)
@@ -44,13 +44,12 @@ def compare_picture(request):
         result = image_embedding(submitted_image,challenge_image)
         score = round(result*100)
         return json({"success": True, "score": score})
-    # except Exception as error:
-    #     print(error)
-    #     return json({"success": False})
+    except Exception as error:
+        return json({"success": False})
 
 @app.post('/count-down')
 def compare_picture_set(request):
-    # try:
+    try:
         submission_set = request.json
         total_score = 0
         for index, submission in enumerate(submission_set):
@@ -64,9 +63,8 @@ def compare_picture_set(request):
             score = result/5
             total_score += round(score*100)
         return json({"success": True, "score": total_score})
-    # except:
-    #     print('error from picture_set')
-    #     return json({"success": False})
+    except:
+        return json({"success": False})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, single_process=False)

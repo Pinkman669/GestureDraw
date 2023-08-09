@@ -1,87 +1,76 @@
 body {
-    background-color: #DCDCDC;
+    background-color: #909CC2;
+    width: 100vw;
+    height: 100vh;
 }
 
-.container-fluid.main {
-    /* display: grid;
-  grid-template-columns: auto ;
-  grid-gap: 50px;
-  padding: 10px;
-  height: 100%; */
-    max-width: 1280px;
-}
-
-.container-fluid.main>div {
-    margin: 50px 0;
+.main {
+    width: 100%;
 }
 
 #pre-game {
-    border: 7px solid #F0C14E;
-    /* grid-column: 1 / span 2; */
+    border: none;
     text-align: center;
-    min-height: fit-content;
     padding: 100px 0;
-    /* outline: 7px solid #F0C14E; */
-    background-image: url('');
-    border-radius: 25px;
-}
-
-h1 {
-    font-size: 100px;
+    background-color: #084887;
+    color: white;
 }
 
 #introduction {
-    /* outline: 7px solid #4B88C6; */
-    border: 7px solid #4B88C6;
-    border-radius: 25px;
     padding: 20px;
     text-align: center;
+    background-color: #084887;
+    color: white;
+}
 
+#pre-game > h1{
+    font-size: 70px;
+    font-family: 'Edu SA Beginner', sans-serif;
 }
 
 #how-to-play {
-    /* outline: 7px solid #4B88C6; */
-    border: 7px solid #4B88C6;
-    border-radius: 25px;
     padding: 20px;
     text-align: center;
-    min-height: fit-content;
+    color: white;
 }
 
 .title {
-    font-size: 50px;
-    color: #000;
+    font-size: 40px;
+    font-family: 'Quicksand';
 }
 
 .content {
     font-size: 20px;
     color: #000;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
 }
 
 input {
-
-    border: 5px solid #000;
+    border: 3px solid #000;
     border-radius: 25px;
     padding: 16px 32px;
     margin: 4px 2px;
-
 }
 
 #start-btn {
-    border: 5px solid #000;
+    border: 3px solid #000;
     border-radius: 25px;
     color: #000;
     padding: 16px 32px;
     margin: 4px 2px;
     cursor: pointer;
-    font-weight: 700;
+    font-family: 'Acme', sans-serif;
 }
 
 #drawing-demo-div {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
+}
+
+.video-div{
+    margin: 0 15px;
 }
 
 .video-div > video{
@@ -94,12 +83,20 @@ input {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+.navbar-brand{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.nav-link, .dropdown-item{
+    font-family: 'Lexend', sans-serif; 
+}
+
 @media screen and (max-width: 500px) {
     .container-fluid.main {
         max-width: 500px;
     }
     h1 {
-        font-size: 70px;
+        font-size: 58px;
     }
     #drawing-demo-div {
         display: flex;
