@@ -11,9 +11,8 @@ if (window.innerWidth <= 500){
 } else {
   [webcamWidth, webcamHeight] = [1024, 768]
 }
-
 if (hasGetUserMedia()) {
-    enableCam(webcamWidth, webcamHeight, true)
+  enableCam(webcamWidth, webcamHeight, true)
 } else {
   console.warn("getUserMedia() is not supported by your browser")
 }

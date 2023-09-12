@@ -78,7 +78,6 @@ exitBtn.addEventListener('click', ()=>{
 })
 
 async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
-<<<<<<< HEAD
     // Submit challenge
     submitBtn.addEventListener('click', async () => {
         drawingState = false
@@ -135,10 +134,6 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
         indicator.style.backgroundColor = "black"
         indicator.style.color = "white"
     })
-=======
-    // handle submit challenge
-    submitChallenge(trainingMode)
->>>>>>> 23150741d16e738f4d7b5a2abb1fdce9c6b8f5dd
 
     // save image
     if (trainingMode){

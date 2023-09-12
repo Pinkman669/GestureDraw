@@ -12,17 +12,8 @@ body {
     border: none;
     text-align: center;
     padding: 100px 0;
-<<<<<<< HEAD
     background-color: #084887;
     color: white;
-=======
-    /* outline: 7px solid #F0C14E; */
-    border-radius: 25px;
-}
-
-h1 {
-    font-size: 100px;
->>>>>>> 23150741d16e738f4d7b5a2abb1fdce9c6b8f5dd
 }
 
 #introduction {
