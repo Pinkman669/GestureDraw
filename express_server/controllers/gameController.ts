@@ -5,7 +5,7 @@ export class GameController {
     postFrame = async (req: Request, res: Response) => {
             try {
                 const frame = req.body.frame
-                const resSanic = await fetch('http://127.0.0.1:8000', {
+                const resSanic = await fetch('http://127.0.0.1:8000/', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
