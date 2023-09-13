@@ -23,7 +23,7 @@ export class GameController {
         try {
             const submission = req.body.submission
             const challenge = req.body.challenge
-            const resSanic = await fetch('http://127.0.0.1:8000/training', {
+            const resSanic = await fetch('http://127.0.0.1:5555/training', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export class GameController {
             const submissionSet = req.body.submissionSet
             req.session.username = req.body.username
             const username = req.session.username
-            const resSanic = await fetch('http://127.0.0.1:8000/count-down',{
+            const resSanic = await fetch('http://127.0.0.1:5555/count-down',{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
