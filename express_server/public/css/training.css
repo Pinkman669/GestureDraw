@@ -167,6 +167,11 @@ body {
     }
     #p5-canvas-container{
         width: 400px;
-        height: 600px;
+        height: 500px;
+    }
+
+    #webcam{
+        width: 400px;
+        height: 500px;
     }
 }

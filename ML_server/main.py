@@ -48,6 +48,7 @@ def compare_picture(request):
         score = round(result*100)
         return json({"success": True, "score": score})
     except Exception as error:
+        print(error)
         return json({"success": False})
 
 @app.post('/count-down')

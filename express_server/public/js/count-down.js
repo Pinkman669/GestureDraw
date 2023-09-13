@@ -13,7 +13,7 @@ let submitClick = false
 const trainingMode = false
 
 if (window.innerWidth <= 500) {
-  [webcamWidth, webcamHeight] = [400, 600]
+  [webcamWidth, webcamHeight] = [400, 500]
 } else {
   [webcamWidth, webcamHeight] = [1024, 768]
 }

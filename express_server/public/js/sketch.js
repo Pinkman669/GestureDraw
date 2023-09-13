@@ -13,7 +13,7 @@ const scoreBtn = document.querySelector('#score-btn')
 const scoreBoard = document.querySelector('#score-board')
 const exitBtn = document.querySelector('.exit-btn')
 const undoBtn = document.querySelector('#undo-btn')
-const frameIntervel = 70
+const frameIntervel = 60
 
 let challengeIndex = 1
 const submissionSet = new Map()
@@ -25,7 +25,7 @@ let drawingState = false
 // Get windows width and height
 let canvasWidth, canvasHeight
 if (window.innerWidth <= 500) {
-    [canvasWidth, canvasHeight] = [400, 600]
+    [canvasWidth, canvasHeight] = [400, 500]
 } else {
     [canvasWidth, canvasHeight] = [1024, 768]
 }
@@ -161,10 +161,10 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
         video.srcObject = stream;
         video.addEventListener("loadeddata", () => {
-            canvasElement.width = video.videoWidth;
-            canvasElement.height = video.videoHeight;
-            canvasHands.width = video.videoWidth
-            canvasHands.height = video.videoHeight
+            canvasElement.width = webcamWidth;
+            canvasElement.height = webcamHeight;
+            canvasHands.width = webcamWidth
+            canvasHands.height = webcamHeight
             // Take stream picture to server
             let prevX, prevY
             let centreX1, centreY1, centreX2, centreY2
@@ -200,13 +200,14 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                         });
                         // Check undo gesture
                         if (result.fingersUp.length == 0) {
+                            console.log(undoCounter)
                             // Undo gesture threshold = 3000ms
-                            if (undoCounter === 1020) {
+                            if (undoCounter === frameIntervel * 17) {
                                 undoSign.textContent = "Undo in 2 Sec"
                                 undoSign.classList.remove('output-data')
-                            } else if (undoCounter === 2040) {
+                            } else if (undoCounter === frameIntervel * 34) {
                                 undoSign.textContent = "Undo in 1 Sec"
-                            } else if (undoCounter === 3000) {
+                            } else if (undoCounter === frameIntervel * 50) {
                                 undoBtn.click()
                                 undoSign.classList.add('output-data')
                             }
@@ -220,7 +221,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                                 indicator.textContent = "Drawing Line"
                                 indicator.style.backgroundColor = "grey"
                                 // Draw mode indicator
-                                drawLandmarks(canvasHandsCtx, [{ x: centreX / video.videoWidth, y: centreY / video.videoHeight }], { color: "#FF0000", lineWidth: 5 });
+                                drawLandmarks(canvasHandsCtx, [{ x: centreX / webcamWidth, y: centreY / webcamHeight }], { color: "#FF0000", lineWidth: 5 });
                                 if (!prevX && !prevY) {
                                     prevX = centreX
                                     prevY = centreY
@@ -240,7 +241,7 @@ async function enableCam(webcamWidth, webcamHeight, trainingMode = false) {
                                 indicator.textContent = "Rubber mode"
                                 indicator.style.backgroundColor = "grey"
                                 clearLine(result.landmarksInPixel[0][fingerIndex][1], result.landmarksInPixel[0][fingerIndex][2], prevX, prevY)
-                                drawLandmarks(canvasHandsCtx, [{ x: result.landmarksInPixel[0][fingerIndex][1] / video.videoWidth, y: result.landmarksInPixel[0][fingerIndex][2] / video.videoHeight }],
+                                drawLandmarks(canvasHandsCtx, [{ x: result.landmarksInPixel[0][fingerIndex][1] / webcamWidth, y: result.landmarksInPixel[0][fingerIndex][2] / webcamHeight }],
                                     { color: "grey", lineWidth: 3 });
                                 prevX = fingerX
                                 prevY = fingerY

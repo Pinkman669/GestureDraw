@@ -7,7 +7,7 @@ let webcamWidth, webcamHeight
 const hasGetUserMedia = async () => !!navigator.mediaDevices?.getUserMedia
 
 if (window.innerWidth <= 500){
-  [webcamWidth, webcamHeight] = [400, 600]
+  [webcamWidth, webcamHeight] = [400, 500]
 } else {
   [webcamWidth, webcamHeight] = [1024, 768]
 }

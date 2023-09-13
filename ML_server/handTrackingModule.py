@@ -66,29 +66,3 @@ class handDetector():
                 if self.hands_list_in_pixel[0][tip_id][2] < self.hands_list_in_pixel[0][tip_id-2][2]:
                     fingers.append(tip_id)
         return fingers
-    
-# # For testing
-# def main():
-#     # camera width and height
-#     width_cam, height_cam = 640, 480
-
-#     # Configure camera settings
-#     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-#     cap.set(3, width_cam) # index refer to VideoCaptureProperties
-#     cap.set(4, height_cam)
-#     detector = handDetector()
-
-#     while True:
-
-#         success, img = cap.read()
-#         detector.findPosition(img)
-#         detector.count_fingers_down()
-#         cv2.imshow('img', img)
-
-#         if cv2.waitKey(1) == ord('q'):
-#             cap.release()
-#             cv2.destroyAllWindows()
-#             break
-
-# if __name__ == "__main__":
-#     main()
